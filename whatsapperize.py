@@ -22,7 +22,7 @@ ssh_login_name = os.environ.get('SSH_LOGIN_NAME')
 password = os.environ.get('PASSWORD')
 
 # Read experimental data, print to terminal
-df = pd.read_excel('./experiment_data_revised.xlsx', sheet_name='Sheet1', header=0, usecols="A:K", nrows=64)
+df = pd.read_excel('~/Downloads/experiment_data_revised.xlsx', sheet_name='Sheet1', header=0, usecols="A:K", nrows=64)
 print(df)
 
 # Create sftp connection with host.
