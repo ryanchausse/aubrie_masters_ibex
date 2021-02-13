@@ -83,10 +83,9 @@ for index, row in df.iterrows():
     driver.close()
     driver.quit()
     time.sleep(1)
+    # upload to remote server
+    cnopts = pysftp.CnOpts(knownhosts='./known_hosts')
+    with pysftp.Connection(sftp_domain, username=ssh_login_name, password=password, cnopts=cnopts) as sftp:
+        sftp.put_r(local_dir, sftp_dir)
 
 print("Done.")
-
-# upload to remote server
-cnopts = pysftp.CnOpts(knownhosts='./known_hosts')
-with pysftp.Connection(sftp_domain, username=ssh_login_name, password=password, cnopts=cnopts) as sftp:
-    sftp.put_r(local_dir, sftp_dir)
