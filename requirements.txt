@@ -2,3 +2,4 @@ pandas
 selenium
 python-dotenv
 pysftp
+openpyxl

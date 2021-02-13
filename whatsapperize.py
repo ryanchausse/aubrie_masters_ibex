@@ -22,7 +22,7 @@ ssh_login_name = os.environ.get('SSH_LOGIN_NAME')
 password = os.environ.get('PASSWORD')
 
 # Read experimental data, print to terminal
-df = pd.read_excel('./experiment_data.xlsx', sheet_name='Sheet1', header=0, usecols="A:K", nrows=64)
+df = pd.read_excel('./experiment_data_revised.xlsx', sheet_name='Sheet1', header=0, usecols="A:K", nrows=64)
 print(df)
 
 # Create sftp connection with host.
@@ -86,7 +86,7 @@ for index, row in df.iterrows():
 
 print("Done.")
 
-# # upload to remote server
-# cnopts = pysftp.CnOpts(knownhosts='./known_hosts')
-# with pysftp.Connection(sftp_domain, username=ssh_login_name, password=password, cnopts=cnopts) as sftp:
-#     sftp.put_r(local_dir, sftp_dir)
+# upload to remote server
+cnopts = pysftp.CnOpts(knownhosts='./known_hosts')
+with pysftp.Connection(sftp_domain, username=ssh_login_name, password=password, cnopts=cnopts) as sftp:
+    sftp.put_r(local_dir, sftp_dir)
