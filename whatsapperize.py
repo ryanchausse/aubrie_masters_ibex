@@ -1,5 +1,6 @@
 import pandas as pd, os, time, base64, pysftp
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
@@ -44,9 +45,15 @@ for index, row in df.iterrows():
     print('Past loader visibility check for ' + str(row['Intro']))
 
     # Enter message text
+    message_propername_element = driver.find_element_by_id("name")
+    # message_propername_element.send_keys(str(row['Proper.Name1']))
+    driver.execute_script("document.getElementById('name').value='" + str(row['Proper.Name1']) + "'")
+    message_propername_element.send_keys(Keys.RETURN)
+    time.sleep(1)
     message_link_element = driver.find_element_by_xpath('//a[contains(@href,"#panel4")]')
     message_link_element.click()
     time.sleep(1)
+
     message_textarea_element = driver.find_element_by_id("message-text")
     message_textarea_element.send_keys(str(row['Intro']))
     message_add_to_conversation_element = driver.find_element_by_css_selector(".sendMessage")
