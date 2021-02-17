@@ -3,3 +3,5 @@ selenium
 python-dotenv
 pysftp
 openpyxl
+requests
+boxsdk[jwt]
