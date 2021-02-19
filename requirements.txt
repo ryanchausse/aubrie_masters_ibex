@@ -5,3 +5,4 @@ pysftp
 openpyxl
 requests
 boxsdk[jwt]
+gitpython

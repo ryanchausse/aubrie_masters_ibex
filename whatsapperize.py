@@ -6,10 +6,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from dotenv import load_dotenv
 
-print("Hello. This script will open an excel spreadsheet in the local Downloads folder, pull out the experiment data, \
+print("This script will open an excel spreadsheet in the local Downloads folder, pull out the experiment data, \
        and create an image of the conversation in WhatsApp \
        based on an interaction via https://www.fakewhats.com/generator with Selenium. The image will then \
-       be uploaded manually to https://ryanchausse.com/aubrie_masters/images/conversation_pics/<x.png>, where x is \
+       be uploaded to https://ryanchausse.com/aubrie_masters/images/conversation_pics/<x.png>, where x is \
        a unique composite key, probably '<item number>_<list number>', or somesuch.")
 
 # Assigning env variables for SFTP url, username, and password based on ENV variables

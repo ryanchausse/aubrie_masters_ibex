@@ -1,4 +1,4 @@
-import pandas as pd, os, time, base64, pysftp, requests, glob, datetime, pytz, re, pathlib
+import pandas as pd, os, time, base64, pysftp, glob, datetime, pathlib
 from dateutil import tz
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from dotenv import load_dotenv
 from boxsdk import JWTAuth, Client
+from git import Repo
 
 print("This script replaces the old Excel formula/column from the original experiment data spreadsheet. \
       The aim is to scrape the relevant fields \
@@ -17,20 +18,29 @@ print("This script replaces the old Excel formula/column from the original exper
 # Assigning env variables for SFTP url, username, and password based on ENV variables
 load_dotenv(dotenv_path='.env')
 
-# Get excel file from Box, download to ~/Downloads
+# Load all .env variables
 box_jwt_config_location = str(os.environ.get('BOX_JWT_CONFIG_LOCATION'))
 box_file_shared_link = str(os.environ.get('BOX_FILE_SHARED_LINK'))
 box_local_dir = str(os.environ.get('BOX_LOCAL_DIR'))
 box_user_id = str(os.environ.get('BOX_USER_ID'))
 box_filename_without_version_or_extension = str(os.environ.get('BOX_FILENAME_WITHOUT_VERSION_OR_EXTENSION'))
 experiment_data_file_name = str(os.environ.get('EXPERIMENT_DATA_FILE_NAME'))
-expected_excel_local_path = box_local_dir + "/" + box_filename_without_version_or_extension
-expected_excel_local_path = expected_excel_local_path + '*.xlsx'
+expected_excel_local_path = box_local_dir + "/" + box_filename_without_version_or_extension + '*.xlsx'
 expected_json_data_path = box_local_dir + "/" + experiment_data_file_name
 ibex_farm_username = str(os.environ.get('IBEX_FARM_USERNAME'))
 ibex_farm_password = str(os.environ.get('IBEX_FARM_PASSWORD'))
 ibex_farm_project_name = str(os.environ.get('IBEX_FARM_PROJECT_NAME'))
+sftp_domain = os.environ.get('SFTP_DOMAIN')
+sftp_dir = str(os.environ.get('SFTP_DIR'))
+local_dir = str(os.environ.get('LOCAL_DIR'))
+ssh_login_name = os.environ.get('SSH_LOGIN_NAME')
+ssh_password = os.environ.get('SSH_PASSWORD')
+git_repo_location = str(os.environ.get('GIT_REPO_LOCATION'))
+git_branch = str(os.environ.get('GIT_BRANCH'))
+local_repo_experiment_data_file_location = str(os.environ.get('LOCAL_REPO_EXPERIMENT_DATA_FILE_LOCATION'))
+repo_local_path = str(os.environ.get('REPO_LOCAL_PATH'))
 
+# Get excel file from Box, download to ~/Downloads
 excel_local_path = './'
 for file in glob.glob(expected_excel_local_path):
     excel_local_path = file
@@ -58,9 +68,9 @@ dt_local_modified = datetime.datetime.strptime(local_file_modified_time, "%a %b 
 modified_recently = dt_box_modified > dt_local_modified
 
 # Write file content to file, else exit(0)
-# if not modified_recently:
-#     print('No change to file. Exiting...')
-#     exit(0)
+if not modified_recently:
+    print('No change to file. Exiting...')
+    exit(0)
 
 with open(excel_local_path, 'wb') as open_file:
     client.with_shared_link(box_file_shared_link, box_shared_link_password).file(box_file_id).download_to(open_file)
@@ -69,12 +79,6 @@ with open(excel_local_path, 'wb') as open_file:
 # Read experimental data, print to terminal
 df = pd.read_excel(excel_local_path, sheet_name='Sheet1', header=0, usecols="A:K", nrows=64)
 print(df)
-
-# sftp_domain = os.environ.get('SFTP_DOMAIN')
-# sftp_dir = str(os.environ.get('SFTP_DIR'))
-# local_dir = str(os.environ.get('LOCAL_DIR'))
-# ssh_login_name = os.environ.get('SSH_LOGIN_NAME')
-# ssh_password = os.environ.get('SSH_PASSWORD')
 
 # Original, working excel formula for json column:
 # =CHAR(91)&CHAR(91)&""""&A2&""""&", "&B2&CHAR(93)&", ""AcceptabilityJudgment"", {s: {html: ""<div style=\""width: 50em;\""><!––  trial_type="&A2&"  item_number="&B2&"  pron="&E2&"  cond="&F2&"  cond_code="&D2&"  attested="&K2&"  ––><p style=\""text-align: center;\"" hidden>"&SUBSTITUTE(H2,CHAR(10),"<br \> ")&"</p><center><img style=\""text-align:center;\"" src=\""https://ryanchausse.com/aubrie_masters/images/conversation_pics/"&B2&"_"&C2&".png\"" alt=\""" & SUBSTITUTE(H2,CHAR(10),"<br \> ") & " " & I2 & " " & J2 & "\"" /></center></div>""}}],"
@@ -86,7 +90,17 @@ print(df)
 
 json_to_append = ''
 for index, row in df.iterrows():
-    row_to_json_string = "[[\"" + str(row['trial.type']) + "\", " + str(row['Item.n']) + "], \"AcceptabilityJudgment\", {s: {html: \"<div style=\\\"width: 50em;\\\"><!––  trial_type=" + str(row['trial.type']) + " item_number=" + str(row['Item.n']) + " pron=" + str(row['Pron']) + " cond=" + str(row['cond']) + " cond_code=" + str(row['cond.code']) + " attested=" + str(row['attested (Y/N)']) + " ––><p style=\\\"text-align: center;\\\" hidden>" + str(row['Intro']) + "</p><center><img style=\\\"text-align:center;\\\" src=\\\"https://ryanchausse.com/aubrie_masters/images/conversation_pics/" + str(row['Item.n']) + "_" + str(row['list']) + ".png\\\" alt=\\\"" + (str(row['Intro']) if row['Intro'] and str(row['Intro']) != 'nan' else '') + " " + (str(row['Response1']) if row['Response1'] and str(row['Response1']) != 'nan' else '') + " " + (str(row['Response2']) if row['Response2'] and str(row['Response2']) != 'nan' else '') + "\\\"/></center></div>""}}],"
+    row_to_json_string = "[[\"" + str(row['trial.type']) + "\", " + str(row['Item.n']) + \
+                         "], \"AcceptabilityJudgment\", {s: {html: \"<div style=\\\"width: 50em;\\\"><!––  trial_type=" + \
+                         str(row['trial.type']) + " item_number=" + str(row['Item.n']) + " pron=" + str(row['Pron']) + \
+                         " cond=" + str(row['cond']) + " cond_code=" + str(row['cond.code']) + " attested=" + \
+                         str(row['attested (Y/N)']) + " ––><p style=\\\"text-align: center;\\\" hidden>" + \
+                         str(row['Intro']) + "</p><center><img style=\\\"text-align:center;\\\" src=\\\"https://ryanchausse.com/aubrie_masters/images/conversation_pics/" + \
+                         str(row['Item.n']) + "_" + str(row['list']) + ".png\\\" alt=\\\"" + \
+                         (str(row['Intro']) if row['Intro'] and str(row['Intro']) != 'nan' else '') + " " + \
+                         (str(row['Response1']) if row['Response1'] and str(row['Response1']) != 'nan' else '') + " " + \
+                         (str(row['Response2']) if row['Response2'] and str(row['Response2']) != 'nan' else '') + \
+                         "\\\"/></center></div>""}}],"
     json_to_append += row_to_json_string + "\n"
     print('')
 print(json_to_append)
@@ -101,10 +115,22 @@ new_file_data = old_file_data + json_to_append
 with open(expected_json_data_path, 'w') as json_data_file:
     json_data_file.write(new_file_data)
 
-# Now, log into IBEX farm with Selenium and replace example_data.js with our new version
+time.sleep(2)
+
+# Update our github repo to include the new JSON data
+with open(local_repo_experiment_data_file_location, 'w') as repo_json_data_file:
+    repo_json_data_file.write(new_file_data)
+repo = Repo(repo_local_path)
+repo.git.add(update=True)
+repo.index.commit('Changed: experiment data')
+origin = repo.remote(name='origin')
+origin.push()
+
+
+# Now, log into IBEX farm with Selenium and replace all files with our repo update
 print('Replacing JSON data file in IBEX farm...')
 
-# Log in to IBEX Farm using Selenium
+# Log in to IBEX Farm using Selenium and click to sync repo with IBEX platform
 driver = webdriver.Firefox()
 driver.get('https://spellout.net/ibexfarm/login')
 time.sleep(1)
@@ -120,10 +146,87 @@ time.sleep(2)
 experiment_link = driver.find_element_by_link_text(ibex_farm_project_name)
 experiment_link.click()
 time.sleep(2)
-upload_new_file_to_data_includes_dir_element = driver.find_element_by_xpath('/html/body/div[12]/input')
-upload_new_file_to_data_includes_dir_element.send_keys(expected_json_data_path)
-sleep(2)
+git_url_input_element = driver.find_element_by_id('git_url')
+git_url_input_element.send_keys(git_repo_location)
+git_branch_input_element = driver.find_element_by_id('git_branch')
+git_branch_input_element.send_keys(git_branch)
+git_sync_element = driver.find_element_by_id('gitsync')
+git_sync_element.click()
+sleep(5)
 driver.close()
 driver.quit()
 
-print('Done')
+print('Done with sync, moving on to image gathering and upload to ryanchausse.com')
+
+# Read experimental data, print to terminal
+df = pd.read_excel(excel_local_path, sheet_name='Sheet1', header=0, usecols="A:K", nrows=64)
+print(df)
+
+# 1. Create unique filename in the format '<item number>_<list number>'
+# 2. Gather image using https://www.fakewhats.com/generator from Intro, Response 1, and Response2 columns
+# 3. Upload image to sftp://ryanchausse.com/aubrie_masters/images/
+
+for index, row in df.iterrows():
+    # Selenium to scrape the page, enter input data
+    driver = webdriver.Firefox()
+    driver.get('https://www.fakewhats.com/generator')
+    time.sleep(1)
+    wait_for_loading_div_gone = WebDriverWait(driver, timeout=10).until(
+        ec.invisibility_of_element_located(
+            (By.XPATH, '//a[contains(@class,"loader")]')
+        )
+    )
+    print('Past loader visibility check for ' + str(row['Intro']))
+
+    # Enter message text
+    message_propername_element = driver.find_element_by_id("name")
+    # message_propername_element.send_keys(str(row['Proper.Name1']))
+    driver.execute_script("document.getElementById('name').value='" + str(row['Proper.Name1']) + "'")
+    message_propername_element.send_keys(Keys.RETURN)
+    time.sleep(1)
+    message_link_element = driver.find_element_by_xpath('//a[contains(@href,"#panel4")]')
+    message_link_element.click()
+    time.sleep(1)
+
+    message_textarea_element = driver.find_element_by_id("message-text")
+    message_textarea_element.send_keys(str(row['Intro']))
+    message_add_to_conversation_element = driver.find_element_by_css_selector(".sendMessage")
+    message_add_to_conversation_element.click()
+    time.sleep(1)
+    if row['Response1']:
+        message_textarea_element.clear()
+        switch_speaker_button_element = driver.find_element_by_css_selector("label[for='green-message']")
+        switch_speaker_button_element.click()
+        time.sleep(1)
+        message_textarea_element.send_keys(str(row['Response1']))
+        if row['Response2'] is not None and str(row['Response2']) != 'nan':
+            time.sleep(1)
+            message_textarea_element.send_keys(' ' + str(row['Response2']))
+            time.sleep(1)
+        message_add_to_conversation_element.click()
+        time.sleep(1)
+
+    download_button_element = driver.find_element_by_css_selector("a.line-button-white")
+    download_button_element.click()
+    time.sleep(4)
+
+    # get the image source
+    imgfilename = str(row['Item.n']) + "_" + str(row['list']) + '.png'
+    print('imgfilename ' + imgfilename)
+    imgsrc = driver.find_element_by_css_selector('img').get_attribute('src')
+    imgdata = imgsrc.replace('data:image/png;base64,', '')
+
+    # download
+    with open(local_dir + '/' + imgfilename, 'wb') as fh:
+        fh.write(base64.b64decode(imgdata))
+
+    time.sleep(1)
+    driver.close()
+    driver.quit()
+    time.sleep(1)
+    # upload to remote server
+    cnopts = pysftp.CnOpts(knownhosts='./known_hosts')
+    with pysftp.Connection(sftp_domain, username=ssh_login_name, password=password, cnopts=cnopts) as sftp:
+        sftp.put_r(local_dir, sftp_dir)
+
+print("Done.")
