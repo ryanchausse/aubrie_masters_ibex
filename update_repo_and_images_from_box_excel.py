@@ -71,10 +71,10 @@ dt_box_modified = datetime.datetime.fromisoformat(file.content_modified_at).asti
 dt_local_modified = datetime.datetime.strptime(local_file_modified_time, "%a %b %d %H:%M:%S %Y").astimezone(tz.tzlocal())
 modified_recently = dt_box_modified > dt_local_modified
 
-# # Write file content to file, else exit(0)
-# if not modified_recently:
-#     print('No change to file. Exiting...')
-#     exit(0)
+# Write file content to file, else exit(0)
+if not modified_recently:
+    print('No change to file. Exiting...')
+    exit(0)
 
 with open(excel_local_path, 'wb') as open_file:
     client.with_shared_link(box_file_shared_link, box_shared_link_password).file(box_file_id).download_to(open_file)
