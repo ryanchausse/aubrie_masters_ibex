@@ -35,10 +35,13 @@ sftp_dir = str(os.environ.get('SFTP_DIR'))
 local_dir = str(os.environ.get('LOCAL_DIR'))
 ssh_login_name = os.environ.get('SSH_LOGIN_NAME')
 ssh_password = os.environ.get('SSH_PASSWORD')
-git_repo_location = str(os.environ.get('GIT_REPO_LOCATION'))
+git_remote_repo_location = str(os.environ.get('GIT_REMOTE_REPO_LOCATION'))
+git_local_repo_location = str(os.environ.get('GIT_LOCAL_REPO_LOCATION'))
 git_branch = str(os.environ.get('GIT_BRANCH'))
 local_repo_experiment_data_file_location = str(os.environ.get('LOCAL_REPO_EXPERIMENT_DATA_FILE_LOCATION'))
-repo_local_path = str(os.environ.get('REPO_LOCAL_PATH'))
+excel_column_range = str(os.environ.get('EXCEL_COLUMN_RANGE'))
+excel_number_of_rows = str(os.environ.get('EXCEL_NUMBER_OF_ROWS'))
+excel_sheet_name = str(os.environ.get('EXCEL_SHEET_NAME'))
 
 # Get excel file from Box, download to ~/Downloads
 excel_local_path = './'
@@ -67,10 +70,10 @@ dt_box_modified = datetime.datetime.fromisoformat(file.content_modified_at).asti
 dt_local_modified = datetime.datetime.strptime(local_file_modified_time, "%a %b %d %H:%M:%S %Y").astimezone(tz.tzlocal())
 modified_recently = dt_box_modified > dt_local_modified
 
-# Write file content to file, else exit(0)
-if not modified_recently:
-    print('No change to file. Exiting...')
-    exit(0)
+# # Write file content to file, else exit(0)
+# if not modified_recently:
+#     print('No change to file. Exiting...')
+#     exit(0)
 
 with open(excel_local_path, 'wb') as open_file:
     client.with_shared_link(box_file_shared_link, box_shared_link_password).file(box_file_id).download_to(open_file)
@@ -120,7 +123,7 @@ time.sleep(2)
 # Update our github repo to include the new JSON data
 with open(local_repo_experiment_data_file_location, 'w') as repo_json_data_file:
     repo_json_data_file.write(new_file_data)
-repo = Repo(repo_local_path)
+repo = Repo(git_local_repo_location)
 repo.git.add(update=True)
 repo.index.commit('Changed: experiment data')
 origin = repo.remote(name='origin')
@@ -147,7 +150,7 @@ experiment_link = driver.find_element_by_link_text(ibex_farm_project_name)
 experiment_link.click()
 time.sleep(2)
 git_url_input_element = driver.find_element_by_id('git_url')
-git_url_input_element.send_keys(git_repo_location)
+git_url_input_element.send_keys(git_remote_repo_location)
 git_branch_input_element = driver.find_element_by_id('git_branch')
 git_branch_input_element.send_keys(git_branch)
 git_sync_element = driver.find_element_by_id('gitsync')
@@ -159,7 +162,7 @@ driver.quit()
 print('Done with sync, moving on to image gathering and upload to ryanchausse.com')
 
 # Read experimental data, print to terminal
-df = pd.read_excel(excel_local_path, sheet_name='Sheet1', header=0, usecols="A:K", nrows=64)
+df = pd.read_excel(excel_local_path, sheet_name=excel_sheet_name, header=0, usecols=excel_column_range, nrows=excel_number_of_rows)
 print(df)
 
 # 1. Create unique filename in the format '<item number>_<list number>'
