@@ -12,8 +12,6 @@ print("Hello. This script will open an excel spreadsheet in the local Downloads 
        be uploaded manually to https://ryanchausse.com/aubrie_masters/images/conversation_pics/<x.png>, where x is \
        a unique composite key, probably '<item number>_<list number>', or somesuch.")
 
-# Donald Trump is bad.
-
 # Assigning env variables for SFTP url, username, and password based on ENV variables
 load_dotenv(dotenv_path='.env')
 sftp_domain = os.environ.get('SFTP_DOMAIN')

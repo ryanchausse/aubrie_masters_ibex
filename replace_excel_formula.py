@@ -7,12 +7,11 @@ from selenium.webdriver.support import expected_conditions as ec
 from dotenv import load_dotenv
 from boxsdk import JWTAuth, Client
 
-print("This script replaces the old Excel formula/column from the original experiment data spreadsheet \
-      utilizing openpyxl (I think, we'll see). The aim is to scrape the relevant fields \
+print("This script replaces the old Excel formula/column from the original experiment data spreadsheet. \
+      The aim is to scrape the relevant fields \
       from the original spreadsheet, process them into a JSON field that needs be appended to \
       example_data.js (or perhaps another, better named file), and to upload these data \
-      to IBEX farm which shows the project at https://spellout.net/ibexexps/aubrieamstutz/SPD/experiment.html \
-      and whose repo is nonexistent (a technique literally called braindead by the original author). \
+      to IBEX farm which shows the project at https://spellout.net/ibexexps/aubrieamstutz/SPD/experiment.html. \
       It may be possible to update via the web UI via Selenium.")
 
 # Assigning env variables for SFTP url, username, and password based on ENV variables
