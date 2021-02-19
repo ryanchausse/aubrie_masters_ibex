@@ -40,7 +40,7 @@ git_local_repo_location = str(os.environ.get('GIT_LOCAL_REPO_LOCATION'))
 git_branch = str(os.environ.get('GIT_BRANCH'))
 local_repo_experiment_data_file_location = str(os.environ.get('LOCAL_REPO_EXPERIMENT_DATA_FILE_LOCATION'))
 excel_column_range = str(os.environ.get('EXCEL_COLUMN_RANGE'))
-excel_number_of_rows = str(os.environ.get('EXCEL_NUMBER_OF_ROWS'))
+excel_number_of_rows = int(os.environ.get('EXCEL_NUMBER_OF_ROWS'))
 excel_sheet_name = str(os.environ.get('EXCEL_SHEET_NAME'))
 
 # Get excel file from Box, download to ~/Downloads
@@ -152,11 +152,7 @@ time.sleep(2)
 update_from_git_element = driver.find_element_by_xpath('/html/body/div[1]/div/div[3]/span[1]')
 update_from_git_element.click()
 time.sleep(1)
-# git_url_input_element = driver.find_element_by_id('git_url')
-# git_url_input_element.setAttribute("value", git_remote_repo_location)
 driver.execute_script("document.getElementById('git_url').value='" + git_remote_repo_location + "'")
-# git_branch_input_element = driver.find_element_by_id('git_branch')
-# git_branch_input_element.setAttribute("value", git_branch)
 driver.execute_script("document.getElementById('git_branch').value='" + git_branch + "'")
 git_sync_element = driver.find_element_by_id('gitsync')
 git_sync_element.click()
@@ -167,7 +163,8 @@ driver.quit()
 print('Done with sync, moving on to image gathering and upload to ryanchausse.com')
 
 # Read experimental data, print to terminal
-df = pd.read_excel(excel_local_path, sheet_name=excel_sheet_name, header=0, usecols=excel_column_range, nrows=excel_number_of_rows)
+df = pd.read_excel(excel_local_path, sheet_name=excel_sheet_name, header=0,
+                   usecols=excel_column_range, nrows=excel_number_of_rows)
 print(df)
 
 # 1. Create unique filename in the format '<item number>_<list number>'
