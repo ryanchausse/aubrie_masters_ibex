@@ -166,6 +166,9 @@ print('Done with sync, moving on to image gathering and upload to ryanchausse.co
 # Read experimental data, print to terminal
 df = pd.read_excel(excel_local_path, sheet_name=excel_sheet_name, header=0,
                    usecols=excel_column_range, nrows=excel_number_of_rows)
+# Automate this eventually using pandas functions, e.g.:
+# count_row = df.shape[0]  # Gives number of rows
+# count_col = df.shape[1]  # Gives number of columns
 print(df)
 
 # 1. Create unique filename in the format '<item number>_<list number>'
