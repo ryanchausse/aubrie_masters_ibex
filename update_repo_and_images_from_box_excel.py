@@ -105,15 +105,16 @@ for index, row in df.iterrows():
                          (str(row['Response1']) if row['Response1'] and str(row['Response1']) != 'nan' else '') + " " + \
                          (str(row['Response2']) if row['Response2'] and str(row['Response2']) != 'nan' else '') + \
                          "\\\"/></center></div>""}}],"
-    json_to_append += row_to_json_string + "\n"
+    json_to_append += row_to_json_string + "\r"
     print('')
 print(json_to_append)
 
 # Now replace all experiment JSON data with our new json_to_append
 # then append "];" so it is properly formatted JSON at end of file, and write to file.
-json_to_append = "// Begin experiment data: \n" + json_to_append + "];"
+
 txt = pathlib.Path(expected_json_data_path).read_text()
-old_file_data = txt.split('// Begin')[0]
+old_file_data = txt.split('// Begin experiment data:')[0]
+json_to_append = "// Begin experiment data: \n" + json_to_append + "];"
 new_file_data = old_file_data + json_to_append
 
 with open(expected_json_data_path, 'w') as json_data_file:
