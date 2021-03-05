@@ -104,8 +104,8 @@ for index, row in df.iterrows():
                          (str(row['Intro']) if row['Intro'] and str(row['Intro']) != 'nan' else '') + " " + \
                          (str(row['Response1']) if row['Response1'] and str(row['Response1']) != 'nan' else '') + " " + \
                          (str(row['Response2']) if row['Response2'] and str(row['Response2']) != 'nan' else '') + \
-                         "\\\"/></center></div>""}}],"
-    json_to_append += row_to_json_string + "\r"
+                         "\\\"/></center></div>"\"}}],"
+    json_to_append += row_to_json_string + "\n"
     print('')
 print(json_to_append)
 
