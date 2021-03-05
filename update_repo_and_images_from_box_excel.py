@@ -203,13 +203,13 @@ for index, row in df.iterrows():
     message_add_to_conversation_element = driver.find_element_by_css_selector(".sendMessage")
     message_add_to_conversation_element.click()
     time.sleep(1)
-    if row['Response1']:
+    if row['Response1'] and str(row['Response1']) != 'nan':
         message_textarea_element.clear()
         switch_speaker_button_element = driver.find_element_by_css_selector("label[for='green-message']")
         switch_speaker_button_element.click()
         time.sleep(1)
         message_textarea_element.send_keys(str(row['Response1']))
-        if row['Response2'] is not None and str(row['Response2']) != 'nan':
+        if row['Response2'] and str(row['Response2']) != 'nan':
             time.sleep(1)
             message_textarea_element.send_keys(' ' + str(row['Response2']))
             time.sleep(1)
