@@ -94,17 +94,30 @@ print(df)
 
 json_to_append = ''
 for index, row in df.iterrows():
-    row_to_json_string = "[[\"" + str(row['trial.type']) + "\", " + str(row['Item.n']) + \
-                         "], \"AcceptabilityJudgment\", {s: {html: \"<div style=\\\"width: 50em;\\\"><!––  trial_type=" + \
-                         str(row['trial.type']) + " item_number=" + str(row['Item.n']) + " pron=" + str(row['Pron']) + \
-                         " cond=" + str(row['cond']) + " cond_code=" + str(row['cond.code']) + " attested=" + \
-                         str(row['attested (Y/N)']) + " ––><p style=\\\"text-align: center;\\\" hidden>" + \
-                         str(row['Intro']) + "</p><center><img style=\\\"text-align:center;\\\" src=\\\"https://ryanchausse.com/aubrie_masters/images/conversation_pics/" + \
-                         str(row['Item.n']) + "_" + str(row['list']) + ".png\\\" alt=\\\"" + \
-                         (str(row['Intro']) if row['Intro'] and str(row['Intro']) != 'nan' else '') + " " + \
-                         (str(row['Response1']) if row['Response1'] and str(row['Response1']) != 'nan' else '') + " " + \
-                         (str(row['Response2']) if row['Response2'] and str(row['Response2']) != 'nan' else '') + \
-                         "\\\"/></center></div>\"}}],"
+    if str(row['trial.type']) == "filler":
+        row_to_json_string = "[\"" + str(row['trial.type']) + "\" " \
+                             ", \"AcceptabilityJudgment\", {s: {html: \"<div style=\\\"width: 50em;\\\"><!––  trial_type=" + \
+                             str(row['trial.type']) + " item_number=" + str(row['Item.n']) + " pron=" + str(row['Pron']) + \
+                             " cond=" + str(row['cond']) + " cond_code=" + str(row['cond.code']) + " attested=" + \
+                             str(row['attested (Y/N)']) + " ––><p style=\\\"text-align: center;\\\" hidden>" + \
+                             str(row['Intro']) + "</p><center><img style=\\\"text-align:center;\\\" src=\\\"https://ryanchausse.com/aubrie_masters/images/conversation_pics/" + \
+                             str(row['Item.n']) + "_" + str(row['list']) + ".png\\\" alt=\\\"" + \
+                             (str(row['Intro']) if row['Intro'] and str(row['Intro']) != 'nan' else '') + " " + \
+                             (str(row['Response1']) if row['Response1'] and str(row['Response1']) != 'nan' else '') + " " + \
+                             (str(row['Response2']) if row['Response2'] and str(row['Response2']) != 'nan' else '') + \
+                             "\\\"/></center></div>\"}}],"
+    else:
+        row_to_json_string = "[[\"" + str(row['trial.type']) + "\", " + str(row['Item.n']) + \
+                             "], \"AcceptabilityJudgment\", {s: {html: \"<div style=\\\"width: 50em;\\\"><!––  trial_type=" + \
+                             str(row['trial.type']) + " item_number=" + str(row['Item.n']) + " pron=" + str(row['Pron']) + \
+                             " cond=" + str(row['cond']) + " cond_code=" + str(row['cond.code']) + " attested=" + \
+                             str(row['attested (Y/N)']) + " ––><p style=\\\"text-align: center;\\\" hidden>" + \
+                             str(row['Intro']) + "</p><center><img style=\\\"text-align:center;\\\" src=\\\"https://ryanchausse.com/aubrie_masters/images/conversation_pics/" + \
+                             str(row['Item.n']) + "_" + str(row['list']) + ".png\\\" alt=\\\"" + \
+                             (str(row['Intro']) if row['Intro'] and str(row['Intro']) != 'nan' else '') + " " + \
+                             (str(row['Response1']) if row['Response1'] and str(row['Response1']) != 'nan' else '') + " " + \
+                             (str(row['Response2']) if row['Response2'] and str(row['Response2']) != 'nan' else '') + \
+                             "\\\"/></center></div>\"}}],"
     json_to_append += row_to_json_string + "\n"
     print('')
 print(json_to_append)
