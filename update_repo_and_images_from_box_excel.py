@@ -107,13 +107,13 @@ for index, row in df.iterrows():
                              (str(row['Response2']) if row['Response2'] and str(row['Response2']) != 'nan' else '') + \
                              "\\\"/></center></div>\"}}],"
     else:
-        row_to_json_string = "[[\"" + str(row['trial.type']) + "\", " + str(row['Item.n']) + \
+        row_to_json_string = "[[\"" + str(row['trial.type']) + "\", " + str(int(row['Item.n'])) + \
                              "], \"AcceptabilityJudgment\", {s: {html: \"<div style=\\\"width: 50em;\\\"><!––  trial_type=" + \
-                             str(row['trial.type']) + " item_number=" + str(row['Item.n']) + " pron=" + str(row['Pron']) + \
+                             str(row['trial.type']) + " item_number=" + str(int(row['Item.n'])) + " pron=" + str(row['Pron']) + \
                              " cond=" + str(row['cond']) + " cond_code=" + str(row['cond.code']) + " attested=" + \
                              str(row['attested (Y/N)']) + " ––><p style=\\\"text-align: center;\\\" hidden>" + \
                              str(row['Intro']) + "</p><center><img style=\\\"text-align:center;\\\" src=\\\"https://ryanchausse.com/aubrie_masters/images/conversation_pics/" + \
-                             str(row['Item.n']) + "_" + str(row['list']) + ".png\\\" alt=\\\"" + \
+                             str(int(row['Item.n'])) + "_" + str(row['list']) + ".png\\\" alt=\\\"" + \
                              (str(row['Intro']) if row['Intro'] and str(row['Intro']) != 'nan' else '') + " " + \
                              (str(row['Response1']) if row['Response1'] and str(row['Response1']) != 'nan' else '') + " " + \
                              (str(row['Response2']) if row['Response2'] and str(row['Response2']) != 'nan' else '') + \
