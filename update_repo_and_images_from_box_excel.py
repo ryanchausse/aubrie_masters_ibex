@@ -123,8 +123,13 @@ with open(expected_json_data_path, 'w') as json_data_file:
 time.sleep(2)
 
 # Update our github repo to include the new JSON data
-with open(local_repo_experiment_data_file_location, 'w') as repo_json_data_file:
-    repo_json_data_file.write(new_file_data)
+try:
+    with open(local_repo_experiment_data_file_location, 'w') as repo_json_data_file:
+        repo_json_data_file.write(new_file_data)
+except Exception as e:
+    print(type(e))
+    print(str(e))
+print(os.getcwd())
 repo = Repo(git_local_repo_location)
 repo.git.add(update=True)
 repo.index.commit('Changed: experiment data')
