@@ -239,7 +239,8 @@ print('Done with sync, moving on to image gathering and upload to ryanchausse.co
 #     time.sleep(4)
 #
 #     # get the image source
-#     imgfilename = str(row['Item.n']) + "_" + str(row['list']) + '.png'
+#     # Handle filler images (int type for list number will error)
+#     imgfilename = str(int(row['Item.n'])) + "_" + str(int(row['list'])) + '.png'
 #     print('imgfilename ' + imgfilename)
 #     imgsrc = driver.find_element_by_css_selector('img').get_attribute('src')
 #     imgdata = imgsrc.replace('data:image/png;base64,', '')
