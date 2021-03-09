@@ -7,13 +7,18 @@
         <span class="s1">Questionnaire and Consent to Participate</span>
     </h1>
     <p>
+        This experiment asks you to rate conversations in English on a scale of 1-7. It will take approximately 20 minutes.
         <br /><br />
-        All experimental data collected will be anonymized.
+        After entering your information on this page, there will be a practice session where you can become familiar with the rating system. Then, the real experiment will begin.
+        <br /><br />
+        After the experiment, we will ask you to give us some feedback about your experience with the experiment.
+        <br /><br />
+        All data collected will be anonymized.
     </p>
 
     <table>
         <tr>
-            <td>Full Name:</td>
+            <td>Name:</td>
             <td>
                 <input name="name" type="text" size="30" class="obligatory" />
             </td>
@@ -86,7 +91,7 @@
         <tr>
             <td style="vertical-align: top;">
                 <label class="error" for="EngL"></label>
-                Please give details on your history of English learning (if you have a certification of your level, which level the most recent class you took is, where and when you took the English course):
+                Please give details on your history of English learning (if you have a certification of your level, what level the most recent class you took is, where and when you took it):
             </td>
             <td>
                 <div style="float:right;">
@@ -128,7 +133,7 @@
             </td>
         </tr>
         <tr>
-            <td style="vertical-align: top;">Have you spent considerable time (3+ months) in an English speaking country?</td>
+            <td style="vertical-align: top;">Have you spent considerable time (more than 4 months) in an English speaking country?</td>
             <td>
                 <input name="EngC" type="radio" value="yes" class="obligatory" id="EngCY" />
                 <label for="EngCY">Yes</label>
@@ -166,28 +171,25 @@
                 <label for="EngAct2">private tutoring</label>
                 <br /><br />
                 <input type="checkbox" name="EngAct" id="EngAct3" />
-                <label for="EngAct3">language learning technology (mobile app/website like Duolingo or Babbel)</label>
+                <label for="EngAct3">language learning technology (mobile app/website)</label>
                 <br /><br />
                 <input type="checkbox" name="EngAct" id="EngAct4" />
-                <label for="EngAct4">social media in English (twitter/reddit/youtube/facebook/instagram/tiktok)</label>
-		<br /><br />
+                <label for="EngAct4">social media in English (twitter/reddit/youtube/facebook)</label>
+                <br /><br />
                 <input type="checkbox" name="EngAct" id="EngAct5" />
-                <label for="EngAct5">playing video games in English</label>
+                <label for="EngAct5">in-person conversations with native English speakers (friends/colleagues)</label>
                 <br /><br />
                 <input type="checkbox" name="EngAct" id="EngAct6" />
-                <label for="EngAct6">regular in-person conversations with native English speakers (friends/colleagues)</label>
+                <label for="EngAct6">whatsapp/SMS/messaging with native English speakers</label>
                 <br /><br />
                 <input type="checkbox" name="EngAct" id="EngAct7" />
-                <label for="EngAct7">whatsapp/SMS/private messaging with native English speakers</label>
+                <label for="EngAct7">emails with native English speakers (for work/study/social)</label>
                 <br /><br />
                 <input type="checkbox" name="EngAct" id="EngAct8" />
-                <label for="EngAct8">emails with native English speakers (for work/study/social)</label>
+                <label for="EngAct8">watching tv/movies or listening to music, podcasts, or radio in English</label>
                 <br /><br />
                 <input type="checkbox" name="EngAct" id="EngAct9" />
-                <label for="EngAct9">watching tv/movies or listening to music, podcasts, or radio in English</label>
-                <br /><br />
-                <input type="checkbox" name="EngAct" id="EngAct10" />
-                <label for="EngAct10">reading books in English</label>
+                <label for="EngAct9">reading books in English</label>
             </td>
         </tr>
     </table>
@@ -198,4 +200,5 @@
         <label class="error" for="consent"></label>
     </p>
     <hr />
+    <p>Next, you will begin a “practice session” where you can become familiar with the rating system. After that, the real experiment will begin. If you decide you do not want to participate, you can close the window and no data will be recorded.</p>
 </div>
