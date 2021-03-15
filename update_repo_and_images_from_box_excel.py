@@ -124,7 +124,7 @@ print(json_to_append)
 # Now replace all experiment JSON data with our new json_to_append
 # then append "];" so it is properly formatted JSON at end of file, and write to file.
 
-txt = pathlib.Path(expected_json_data_path).read_text()
+txt = pathlib.Path(local_repo_experiment_data_file_location).read_text()
 old_file_data = txt.split('// Begin experiment data:')[0]
 json_to_append = "// Begin experiment data: \n" + json_to_append + "];"
 new_file_data = old_file_data + json_to_append

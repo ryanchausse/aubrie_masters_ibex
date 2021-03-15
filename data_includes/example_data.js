@@ -88,48 +88,6 @@ var items = [
             html: { include: "feedback.html" }
         }
     ],
-    [
-        "practice",
-        "AcceptabilityJudgment",
-        {s: {html: "<!--expo1XyzXpractice1-----------------><br><br>Margaret: Did you get your computer already fixed? <br> Gale: No, I'm waiting get my paycheck.<br> Margaret: Ok, because my brother said he can look at it if you want!"}}
-    ],
-    [
-        "practice",
-        "AcceptabilityJudgment",
-        {s: {html: "<!--expo1XyzXpractice2-----------------><br><br>Ellen: Did I miss Cindy? <br> Sandra: Yes! Has already left, Cindy."}}
-    ],
-    [
-        "practice",
-        "AcceptabilityJudgment",
-        {s: {html: "<!--expo1XyzXpractice3-----------------><br><br>Nicole: How’s your ankle doing?<br>Justin: It’s a lot better but I’m still limping around the house. No running for me for at least a week…"}}
-    ],
-    /*
-    [
-        ["test", 1],
-        "AcceptabilityJudgment",
-        {s: {html: "<div style=\"width: 50em;\"><!–– test_1_N_N––><p style=\"text-align: center;\">Sarah: Have you and Alex watched the last season of Stranger Things on Netflix? <br>Kelly: No but heard that it was totally crazy! <br>Sarah: I watched the whole thing in like two days because I had to know what happened…</p></div>"}}
-    ],
-    [
-        ["test", 1],
-        "AcceptabilityJudgment",
-        {s: {html: "<div style=\"width: 50em;\"><!–– test_2_Y_Y––><p style=\"text-align: center;\">Sarah: Have you and Alex watched the last season of Stranger Things on Netflix?<br>Kelly: No but we heard that it was totally crazy! <br>Sarah: I watched the whole thing in like two days because I had to know what happened…</p></div>"}}
-    ],
-    [
-        ["test", 2],
-        "AcceptabilityJudgment",
-        {s: {html: "<div style=\"width: 50em;\"><!–– test_2_N_Y––><p style=\"text-align: center;\">Edgar: Tomorrow will go to the gym, if you want to join.<br>Sam: Thanks but I can’t, I have plans already!</p></div>"}}
-    ],
-    [
-        ["test", 2],
-        "AcceptabilityJudgment",
-        {s: {html: "<div style=\"width: 50em;\"><!–– test_1_Y_Y––><p style=\"text-align: center;\">Edgar: Tomorrow I will go to the gym, if you want to join. <br>Sam: Thanks but I can’t, I have plans already!</p></div>"}}
-    ],
-    [
-        ["test", 3],
-        "AcceptabilityJudgment",
-        {s: {html: "<div style=\"width: 50em;\"><!–– test_1_N_N––><p style=\"text-align: center;\">Selene: Cannot believe haven’t sent your birthday card yet. It’s going to be late. <br>Mason: Haha no worries<br>Selene: I’m the worst friend ever! Sorry!</p></div>"}}
-    ],
-    */
 
 // Begin experiment data: 
 [["test", 1], "AcceptabilityJudgment", {s: {html: "<div style=\"width: 50em;\"><!––  trial_type=test item_number=1 list_number=1 pron=I cond=a cond_code=Rt.OV attested=Y ––><p style=\"text-align: center;\" hidden>Did you hear the new Taylor Swift album?</p><center><img style=\"text-align:center;\" src=\"https://ryanchausse.com/aubrie_masters/images/conversation_pics/1_1.png\" alt=\"Did you hear the new Taylor Swift album? Yeah! I love listening to it while I’m at work!\"/></center></div>"}}],
