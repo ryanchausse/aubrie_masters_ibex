@@ -97,8 +97,7 @@ for index, row in df.iterrows():
     if str(row['trial.type']) == "filler":
         row_to_json_string = "[\"" + str(row['trial.type']) + "\" " \
                              ", \"AcceptabilityJudgment\", {s: {html: \"<div style=\\\"width: 50em;\\\"><!––  trial_type=" + \
-                             str(row['trial.type']) + " item_number=" + str(row['Item.n']) + " pron=" + str(row['Pron']) + \
-                             " cond=" + str(row['cond']) + " cond_code=" + str(row['cond.code']) + " attested=" + \
+                             str(row['trial.type']) + " item_number=" + str(row['Item.n']) + " attested=" + \
                              str(row['attested (Y/N)']) + " ––><p style=\\\"text-align: center;\\\" hidden>" + \
                              str(row['Intro']) + "</p><center><img style=\\\"text-align:center;\\\" src=\\\"https://ryanchausse.com/aubrie_masters/images/conversation_pics/" + \
                              str(row['Item.n']) + "_" + str(row['list']) + ".png\\\" alt=\\\"" + \
@@ -109,7 +108,7 @@ for index, row in df.iterrows():
     else:
         row_to_json_string = "[[\"" + str(row['trial.type']) + "\", " + str(int(row['Item.n'])) + \
                              "], \"AcceptabilityJudgment\", {s: {html: \"<div style=\\\"width: 50em;\\\"><!––  trial_type=" + \
-                             str(row['trial.type']) + " item_number=" + str(int(row['Item.n'])) + " pron=" + str(row['Pron']) + \
+                             str(row['trial.type']) + " item_number=" + str(int(row['Item.n'])) + " list_number=" + str(row['list']) + " pron=" + str(row['Pron']) + \
                              " cond=" + str(row['cond']) + " cond_code=" + str(row['cond.code']) + " attested=" + \
                              str(row['attested (Y/N)']) + " ––><p style=\\\"text-align: center;\\\" hidden>" + \
                              str(row['Intro']) + "</p><center><img style=\\\"text-align:center;\\\" src=\\\"https://ryanchausse.com/aubrie_masters/images/conversation_pics/" + \
