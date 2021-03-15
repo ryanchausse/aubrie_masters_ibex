@@ -129,7 +129,7 @@ old_file_data = txt.split('// Begin experiment data:')[0]
 json_to_append = "// Begin experiment data: \n" + json_to_append + "];"
 new_file_data = old_file_data + json_to_append
 
-with open(expected_json_data_path, 'w') as json_data_file:
+with open(local_repo_experiment_data_file_location, 'w') as json_data_file:
     json_data_file.write(new_file_data)
 
 time.sleep(2)
