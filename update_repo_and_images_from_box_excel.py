@@ -94,7 +94,7 @@ print(df)
 
 json_to_append = ''
 for index, row in df.iterrows():
-    if str(row['trial.type']) == "filler":
+    if str(row['trial.type']) == "filler" or str(row['trial.type']) == "practice":
         row_to_json_string = "[\"" + str(row['trial.type']) + "\" " \
                              ", \"AcceptabilityJudgment\", {s: {html: \"<div style=\\\"width: 50em;\\\"><!––  trial_type=" + \
                              str(row['trial.type']) + " item_number=" + str(row['Item.n']) + " attested=" + \
