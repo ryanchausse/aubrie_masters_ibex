@@ -49,11 +49,6 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">
-                <i>(If you are a native speaker, you can click N/A for the following 4 questions.)</i>
-            </td>
-        </tr>
-        <tr>
             <td colspan="2"><label class="error" for="EngN"></label>
             </td>
         </tr>
@@ -63,42 +58,54 @@
             </td>
         </tr>
         <tr>
-            <td style="vertical-align: top;">What level of English do you have?</td>
+            <td style="vertical-align: top;">What level of education have you completed?</td>
             <td>
-                <input name="EngL" type="radio" value="A1-A2" class="obligatory" id="EngLA" />
-                <label for="EngLA">Low (A1-A2)</label>
                 <br />
-                <input name="EngL" type="radio" value="B1-B2" id="EngLB"/>
-                <label for="EngLB">Intermediate (B1-B2)</label>
+                <input name="EdL" type="radio" value="EdLHighSchool" class="obligatory" id="EdLHighSchool" />
+                <label for="EdLHighSchool">High School or equivalent</label>
                 <br />
-                <input name="EngL" type="radio" value="C1-C2" id="EngLC"/>
-                <label for="EngLC">Advanced (C1-C2)</label>
+                <input name="EdL" type="radio" value="EdLAssociates" id="EdLAssociates"/>
+                <label for="EdLAssociates">Associate's degree or some college</label>
                 <br />
-                <input name="EngL" type="radio" value="Nat" id="EngLNat"/>
-                <label for="EngLNat">N/A</label>
-            </td>
-        </tr>
-        <tr>
-            <td>
+                <input name="EdL" type="radio" value="EdLBachelors" id="EdLBachelors"/>
+                <label for="EdLBachelors">Bachelor's degree</label>
+                <br />
+                <input name="EdL" type="radio" value="EdLPostgrad" id="EdLPostgrad"/>
+                <label for="EdLPostgrad">Postgraduate degree or higher</label>
                 <br />
             </td>
         </tr>
         <tr>
             <td style="vertical-align: top;">
-                <label class="error" for="EngL"></label>
-                Please give details on your history of English learning (if you have a certification of your level, which level the most recent class you took is, where and when you took the English course):
+                Did you start learning a language other than English before age 14 and are able to speak it with an intermediate or advanced level of fluency today?
             </td>
             <td>
-                <div style="float:right;">
-                    <textarea name="EngHist" rows="5" cols="40"></textarea>
+                <br />
+                <input name="bilingual" type="radio" value="yes" class="obligatory" id="bilingual_yes" />
+                <label for="bilingual_yes">Yes</label>
+                <input name="bilingual" type="radio" value="no" id="bilingual_no"/>
+                <label for="bilingual_no">No</label>
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td><br /><br /></td>
+            <td><br /><br /></td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;">
+                If so, which language(s)?
+            </td>
+            <td>
+                <div style="margin-left: 10px;">
+                    <textarea name="bilingual_languages" rows="5" cols="40"></textarea>
                     <br />
                 </div>
             </td>
         </tr>
         <tr>
-            <td>
-                <br />
-            </td>
+            <td><br /></td>
+            <td><br /></td>
         </tr>
         <tr>
             <td style="vertical-align: top;">At what age did you begin learning English?</td>
@@ -128,67 +135,19 @@
             </td>
         </tr>
         <tr>
-            <td style="vertical-align: top;">Have you spent considerable time (3+ months) in an English speaking country?</td>
+            <td style="vertical-align: top;">Have you ever been diagnosed with an impairment that might affect your comprehension of written language?
+                <br />
+                <br />(Examples: developmental dyslexia, acquired brain damage, specific language impairment, learning disability/ developmental language disorder. Do NOT select 'yes' for physical abnormalities such as deafness or stuttering.)</td>
             <td>
-                <input name="EngC" type="radio" value="yes" class="obligatory" id="EngCY" />
-                <label for="EngCY">Yes</label>
+                <input name="Impair" type="radio" value="yes" class="obligatory" id="ImpairY" />
+                <label for="ImpairY">Yes</label>
                 <br />
-                <input name="EngC" type="radio" value="no" id="EngCN"/>
-                <label for="EngCN"> No</label>
-                <br />
-                <input name="EngC" type="radio" value="NA" id="EngCNA"/>
-                <label for="EngCNA">N/A</label>
+                <input name="Impair" type="radio" value="no" id="ImpairN"/>
+                <label for="ImpairN"> No</label>
             </td>
         </tr>
         <tr>
-            <td colspan="2"><label class="error" for="EngC"></label></td>
-        </tr>
-        <tr>
-            <td>
-                <br />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <br />
-            </td>
-        </tr>
-        <tr>
-            <td style="vertical-align: top;">
-                Select which types of English activities you have engaged in or used in the last <b>two years</b> (you can select multiple):
-            </td>
-            <td>
-                <br />
-                <input type="checkbox" name="EngAct" id="EngAct1" />
-                <label for="EngAct1">traditional classes (lessons with a professor and multiple students)</label>
-                <br /><br />
-                <input type="checkbox" name="EngAct" id="EngAct2" />
-                <label for="EngAct2">private tutoring</label>
-                <br /><br />
-                <input type="checkbox" name="EngAct" id="EngAct3" />
-                <label for="EngAct3">language learning technology (mobile app/website like Duolingo or Babbel)</label>
-                <br /><br />
-                <input type="checkbox" name="EngAct" id="EngAct4" />
-                <label for="EngAct4">social media in English (twitter/reddit/youtube/facebook/instagram/tiktok)</label>
-		<br /><br />
-                <input type="checkbox" name="EngAct" id="EngAct5" />
-                <label for="EngAct5">playing video games in English</label>
-                <br /><br />
-                <input type="checkbox" name="EngAct" id="EngAct6" />
-                <label for="EngAct6">regular in-person conversations with native English speakers (friends/colleagues)</label>
-                <br /><br />
-                <input type="checkbox" name="EngAct" id="EngAct7" />
-                <label for="EngAct7">whatsapp/SMS/private messaging with native English speakers</label>
-                <br /><br />
-                <input type="checkbox" name="EngAct" id="EngAct8" />
-                <label for="EngAct8">emails with native English speakers (for work/study/social)</label>
-                <br /><br />
-                <input type="checkbox" name="EngAct" id="EngAct9" />
-                <label for="EngAct9">watching tv/movies or listening to music, podcasts, or radio in English</label>
-                <br /><br />
-                <input type="checkbox" name="EngAct" id="EngAct10" />
-                <label for="EngAct10">reading books in English</label>
-            </td>
+
         </tr>
     </table>
     <hr />
