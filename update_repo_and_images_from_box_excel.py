@@ -194,8 +194,8 @@ print(df)
 # 3. Upload image to sftp://ryanchausse.com/aubrie_masters/images/
 
 for index, row in df.iterrows():
-    if type(row['Item.n']) != str:
-        continue
+    # if type(row['Item.n']) != str:
+    #     continue
     # Selenium to scrape the page, enter input data
     driver = webdriver.Firefox()
     driver.get('https://www.fakewhats.com/generator')
