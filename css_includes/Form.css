@@ -3,6 +3,6 @@
     font-weight: bold;
 }
 
-.p .td {
+.p, .td {
     font-size: 1.2em;
 }
