@@ -3,18 +3,18 @@
         <img style="max-width: 160px; max-height: 200px;" src="https://ryanchausse.com/logo/unisi_logo.jpg" alt="University of Siena logo" />
     </p>
 
-    <h1 style="margin: 0.0px 0.0px 16.1px 0.0px; text-align: center; line-height: 28.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000">
+    <h1 style="margin: 0.0px 0.0px 16.1px 0.0px; text-align: center; line-height: 28.0px; font-size:1.2em">
         <span class="s1">Questionnaire and Consent to Participate</span>
     </h1>
-    <p>
-        <br /><br />
+    <p style="font-size: 1em">
+        <br />
         All experimental data collected will be anonymized.
     </p>
 
     <table>
         <tr>
-            <td>Full Name:</td>
-            <td>
+            <td class="non_exp">Full Name:</td>
+            <td class="non_exp">
                 <input name="name" type="text" size="30" class="obligatory" />
             </td>
         </tr>
@@ -24,13 +24,13 @@
             </td>
         </tr>
         <tr>
-            <td>Age:</td>
-            <td>
+            <td class="non_exp">Age:</td>
+            <td class="non_exp">
                 <input name="age" type="text" size="30" class="obligatory" />
             </td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td class="non_exp" colspan="2">
                 <label class="error" for="age"></label>
             </td>
         </tr>
@@ -40,8 +40,8 @@
             </td>
         </tr>
         <tr>
-            <td style="vertical-align: top;">Are you a native (mother tongue) English speaker?</td>
-            <td>
+            <td class="non_exp" style="vertical-align: top;">Are you a native (mother tongue) English speaker?</td>
+            <td class="non_exp">
                 <input name="EngN" type="radio" value="yes" class="obligatory" id="EngNY" />
                 <label for="EngNY">Yes</label>
                 <input name="EngN" type="radio" value="no" id="EngNN"/>
@@ -58,10 +58,10 @@
             </td>
         </tr>
         <tr>
-            <td style="vertical-align: top;">
+            <td class="non_exp" style="vertical-align: top;">
                 Did you start learning a language other than English before age 14 and are able to speak it with an intermediate or advanced level of fluency today?
             </td>
-            <td>
+            <td class="non_exp">
                 <br />
                 <input name="bilingual" type="radio" value="yes" class="obligatory" id="bilingual_yes" />
                 <label for="bilingual_yes">Yes</label>
@@ -75,10 +75,10 @@
             <td><br /><br /></td>
         </tr>
         <tr>
-            <td style="vertical-align: top;">
+            <td class="non_exp" style="vertical-align: top;">
                 If so, which language(s)?
             </td>
-            <td>
+            <td class="non_exp">
                 <div style="margin-left: 10px;">
                     <textarea name="bilingual_languages" rows="5" cols="40"></textarea>
                     <br />
@@ -91,8 +91,8 @@
             </td>
         </tr>
         <tr>
-            <td style="vertical-align: top;">What level of education have you completed?</td>
-            <td>
+            <td class="non_exp" style="vertical-align: top;">What level of education have you completed?</td>
+            <td class="non_exp">
                 <br />
                 <input name="EdL" type="radio" value="EdLHighSchool" class="obligatory" id="EdLHighSchool" />
                 <label for="EdLHighSchool">High School or equivalent</label>
@@ -113,8 +113,8 @@
             <td><br /></td>
         </tr>
         <tr>
-            <td style="vertical-align: top;">At what age did you begin learning English?</td>
-            <td>
+            <td class="non_exp" style="vertical-align: top;">At what age did you begin learning English?</td>
+            <td class="non_exp">
                 <input name="AoA" type="radio" value="0-4" class="obligatory" id="AoA04" />
                 <label for="AoA04">0-4</label>
                 <br />
@@ -144,7 +144,7 @@
         </tr>
     </table>
     <hr />
-    <p>
+    <p style="text-size:1em">
         <input type="checkbox" class="obligatory" name="consent" id="consentcx" />
         <label for="consentcx"> I consent to having my data recorded according to the Italian law n. 675 of 31/12/96 on the protection of personal data, for the use for scientific purposes of the data relating to you, collected for this study and their possible publication anonymously in scientific journals. Participation in the experiment is voluntary. The data will be treated completely anonymously. Your consent is necessary in order to participate in the experiment.</label>
         <label class="error" for="consent"></label>

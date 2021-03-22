@@ -3,6 +3,6 @@
     font-weight: bold;
 }
 
-p, td {
+p.non_exp, td.non_exp {
     font-size: 1.2em;
 }
