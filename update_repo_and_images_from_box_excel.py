@@ -194,7 +194,7 @@ df = pd.read_excel(excel_local_path, sheet_name=excel_sheet_name, header=0,
 # 3. Upload image to sftp://ryanchausse.com/aubrie_masters/images/
 
 for index, row in df.iterrows():
-    if not (row['Item.n'] == 14 and row['list'] == 4) or (row['Item.n'] == 21 and row['list'] == 2):
+    if row['Item.n'] != 21 and row['list'] != 2:
         continue
     # Selenium to scrape the page, enter input data
     driver = webdriver.Firefox()
