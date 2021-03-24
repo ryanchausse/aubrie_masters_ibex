@@ -195,7 +195,7 @@ df = pd.read_excel(excel_local_path, sheet_name=excel_sheet_name, header=0,
 
 for index, row in df.iterrows():
     print(str(row['Item.n']) + ' ' + str(row['list']))
-    if (str(row['Item.n']) != '21') and (str(int(row['list'])) != '2'):
+    if str(row['Item.n']) != '21' and str(int(row['list'])) != '2':
         print('skip')
         continue
     # Selenium to scrape the page, enter input data
