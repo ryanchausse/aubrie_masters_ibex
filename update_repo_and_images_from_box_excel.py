@@ -194,7 +194,7 @@ df = pd.read_excel(excel_local_path, sheet_name=excel_sheet_name, header=0,
 # 3. Upload image to sftp://ryanchausse.com/aubrie_masters/images/
 
 for index, row in df.iterrows():
-    print(str(row['Item.n']) + ' ' + str(row['list']))
+    print(str(row['Item.n']) + ' ' + str(int(row['list'])))
     if str(row['Item.n']) != '21' and str(int(row['list'])) != '2':
         print('skip')
         continue
