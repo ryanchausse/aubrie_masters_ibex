@@ -9,3 +9,4 @@ boxsdk[jwt]
 gitpython
 matplotlib
 scipy
+numpy

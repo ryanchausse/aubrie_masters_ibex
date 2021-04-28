@@ -56,27 +56,26 @@ ratings = {7: response_7,
 
 print(ratings)
 
-better_dict = {'scores': [7, 6, 5, 4, 3, 2, 1],
-               'num_responses': [response_7, response_6, response_5, response_4, response_3, response_2, response_1]}
-
-# data_frame = pd.DataFrame(ratings.items())
 data_frame = pd.DataFrame.from_dict(data=ratings, orient='index', dtype=int)
-# data_frame = pd.DataFrame.from_dict(data=better_dict, orient='index', dtype=int)
+
 # Create raw chart
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 response_sum = [ratings[1], ratings[2], ratings[3], ratings[4], ratings[5], ratings[6], ratings[7]]
 ax.bar(labels, response_sum, label='Responses')
 ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition A - English Native Speakers')
 plt.ylim([0, 210])
+for x in labels:
+    plt.text(labels[x-1], response_sum[x-1], str(response_sum[x-1]), horizontalalignment='center',
+             verticalalignment='bottom')
 plt.savefig('./results/condition_a_english.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -133,19 +132,22 @@ print(ratings)
 # data_frame = pd.DataFrame(ratings.items())
 data_frame = pd.DataFrame.from_dict(data=ratings, orient='index', dtype=int)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 response_sum = [ratings['1'], ratings['2'], ratings['3'], ratings['4'], ratings['5'], ratings['6'], ratings['7']]
 ax.bar(labels, response_sum, label='Responses')
 ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition B - English Native Speakers')
 plt.ylim([0, 210])
+for x in labels:
+    plt.text(labels[x-1], response_sum[x-1], str(response_sum[x-1]), horizontalalignment='center',
+             verticalalignment='bottom')
 plt.savefig('./results/condition_b_english.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -202,19 +204,22 @@ print(ratings)
 # data_frame = pd.DataFrame(ratings.items())
 data_frame = pd.DataFrame.from_dict(data=ratings, orient='index', dtype=int)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 response_sum = [ratings['1'], ratings['2'], ratings['3'], ratings['4'], ratings['5'], ratings['6'], ratings['7']]
 ax.bar(labels, response_sum, label='Responses')
 ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition C - English Native Speakers')
 plt.ylim([0, 210])
+for x in labels:
+    plt.text(labels[x-1], response_sum[x-1], str(response_sum[x-1]), horizontalalignment='center',
+             verticalalignment='bottom')
 plt.savefig('./results/condition_c_english.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -271,19 +276,22 @@ print(ratings)
 # data_frame = pd.DataFrame(ratings.items())
 data_frame = pd.DataFrame.from_dict(data=ratings, orient='index', dtype=int)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 response_sum = [ratings['1'], ratings['2'], ratings['3'], ratings['4'], ratings['5'], ratings['6'], ratings['7']]
 ax.bar(labels, response_sum, label='Responses')
 ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition D - English Native Speakers')
 plt.ylim([0, 210])
+for x in labels:
+    plt.text(labels[x-1], response_sum[x-1], str(response_sum[x-1]), horizontalalignment='center',
+             verticalalignment='bottom')
 plt.savefig('./results/condition_d_english.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -340,19 +348,22 @@ print(ratings)
 # data_frame = pd.DataFrame(ratings.items())
 data_frame = pd.DataFrame.from_dict(data=ratings, orient='index', dtype=int)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 response_sum = [ratings['1'], ratings['2'], ratings['3'], ratings['4'], ratings['5'], ratings['6'], ratings['7']]
 ax.bar(labels, response_sum, label='Responses')
 ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition E - English Native Speakers')
 plt.ylim([0, 210])
+for x in labels:
+    plt.text(labels[x-1], response_sum[x-1], str(response_sum[x-1]), horizontalalignment='center',
+             verticalalignment='bottom')
 plt.savefig('./results/condition_e_english.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -409,19 +420,22 @@ print(ratings)
 # data_frame = pd.DataFrame(ratings.items())
 data_frame = pd.DataFrame.from_dict(data=ratings, orient='index', dtype=int)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 response_sum = [ratings['1'], ratings['2'], ratings['3'], ratings['4'], ratings['5'], ratings['6'], ratings['7']]
 ax.bar(labels, response_sum, label='Responses')
 ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition F - English Native Speakers')
 plt.ylim([0, 210])
+for x in labels:
+    plt.text(labels[x-1], response_sum[x-1], str(response_sum[x-1]), horizontalalignment='center',
+             verticalalignment='bottom')
 plt.savefig('./results/condition_f_english.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -478,19 +492,22 @@ print(ratings)
 # data_frame = pd.DataFrame(ratings.items())
 data_frame = pd.DataFrame.from_dict(data=ratings, orient='index', dtype=int)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 response_sum = [ratings['1'], ratings['2'], ratings['3'], ratings['4'], ratings['5'], ratings['6'], ratings['7']]
 ax.bar(labels, response_sum, label='Responses')
 ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition G - English Native Speakers')
 plt.ylim([0, 210])
+for x in labels:
+    plt.text(labels[x-1], response_sum[x-1], str(response_sum[x-1]), horizontalalignment='center',
+             verticalalignment='bottom')
 plt.savefig('./results/condition_g_english.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -547,19 +564,22 @@ print(ratings)
 # data_frame = pd.DataFrame(ratings.items())
 data_frame = pd.DataFrame.from_dict(data=ratings, orient='index', dtype=int)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 response_sum = [ratings['1'], ratings['2'], ratings['3'], ratings['4'], ratings['5'], ratings['6'], ratings['7']]
 ax.bar(labels, response_sum, label='Responses')
 ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition H - English Native Speakers')
 plt.ylim([0, 210])
+for x in labels:
+    plt.text(labels[x-1], response_sum[x-1], str(response_sum[x-1]), horizontalalignment='center',
+             verticalalignment='bottom')
 plt.savefig('./results/condition_h_english.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 fig, ax = plt.subplots()
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]

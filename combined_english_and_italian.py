@@ -1,5 +1,6 @@
 import pandas as pd, os
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.stats import zscore
 from scipy.stats import f_oneway
 from itertools import islice
@@ -103,7 +104,7 @@ data_frame_italian = pd.DataFrame.from_dict(data=ratings_italian, orient='index'
 
 english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
 one_way_anova = f_oneway(english_value_list, italian_value_list)
 print('One-Way ANOVA for Condition A English/Italian speakers:')
@@ -117,12 +118,18 @@ ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition A')
 plt.ylim([0, 210])
+x = np.arange(len(labels))  # the label locations
+width = 0.35  # the width of the bars
+rects_english = ax.bar(x - width/2, english_value_list, width, label='English')
+rects_italian = ax.bar(x + width/2, italian_value_list, width, label='Italian')
+ax.bar_label(rects_english, padding=1, color='blue')
+ax.bar_label(rects_italian, padding=1, color='red')
 plt.savefig('./results/condition_a_combined.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 z_scored_data_frame_italian = data_frame_italian.apply(zscore)
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -228,7 +235,7 @@ data_frame_italian = pd.DataFrame.from_dict(data=ratings_italian, orient='index'
 
 english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
 one_way_anova = f_oneway(english_value_list, italian_value_list)
 print('One-Way ANOVA for Condition B English/Italian speakers:')
@@ -242,12 +249,18 @@ ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition B')
 plt.ylim([0, 210])
+x = np.arange(len(labels))  # the label locations
+width = 0.35  # the width of the bars
+rects_english = ax.bar(x - width/2, english_value_list, width, label='English')
+rects_italian = ax.bar(x + width/2, italian_value_list, width, label='Italian')
+ax.bar_label(rects_english, padding=1, color='blue')
+ax.bar_label(rects_italian, padding=1, color='red')
 plt.savefig('./results/condition_b_combined.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 z_scored_data_frame_italian = data_frame_italian.apply(zscore)
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -353,7 +366,7 @@ data_frame_italian = pd.DataFrame.from_dict(data=ratings_italian, orient='index'
 
 english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
 one_way_anova = f_oneway(english_value_list, italian_value_list)
 print('One-Way ANOVA for Condition C English/Italian speakers:')
@@ -367,12 +380,18 @@ ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition C')
 plt.ylim([0, 210])
+x = np.arange(len(labels))  # the label locations
+width = 0.35  # the width of the bars
+rects_english = ax.bar(x - width/2, english_value_list, width, label='English')
+rects_italian = ax.bar(x + width/2, italian_value_list, width, label='Italian')
+ax.bar_label(rects_english, padding=1, color='blue')
+ax.bar_label(rects_italian, padding=1, color='red')
 plt.savefig('./results/condition_c_combined.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 z_scored_data_frame_italian = data_frame_italian.apply(zscore)
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -478,7 +497,7 @@ data_frame_italian = pd.DataFrame.from_dict(data=ratings_italian, orient='index'
 
 english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
 one_way_anova = f_oneway(english_value_list, italian_value_list)
 print('One-Way ANOVA for Condition D English/Italian speakers:')
@@ -492,12 +511,18 @@ ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition D')
 plt.ylim([0, 210])
+x = np.arange(len(labels))  # the label locations
+width = 0.35  # the width of the bars
+rects_english = ax.bar(x - width/2, english_value_list, width, label='English')
+rects_italian = ax.bar(x + width/2, italian_value_list, width, label='Italian')
+ax.bar_label(rects_english, padding=1, color='blue')
+ax.bar_label(rects_italian, padding=1, color='red')
 plt.savefig('./results/condition_d_combined.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 z_scored_data_frame_italian = data_frame_italian.apply(zscore)
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -603,7 +628,7 @@ data_frame_italian = pd.DataFrame.from_dict(data=ratings_italian, orient='index'
 
 english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
 one_way_anova = f_oneway(english_value_list, italian_value_list)
 print('One-Way ANOVA for Condition E English/Italian speakers:')
@@ -617,12 +642,18 @@ ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition E')
 plt.ylim([0, 210])
+x = np.arange(len(labels))  # the label locations
+width = 0.35  # the width of the bars
+rects_english = ax.bar(x - width/2, english_value_list, width, label='English')
+rects_italian = ax.bar(x + width/2, italian_value_list, width, label='Italian')
+ax.bar_label(rects_english, padding=1, color='blue')
+ax.bar_label(rects_italian, padding=1, color='red')
 plt.savefig('./results/condition_e_combined.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 z_scored_data_frame_italian = data_frame_italian.apply(zscore)
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -728,7 +759,7 @@ data_frame_italian = pd.DataFrame.from_dict(data=ratings_italian, orient='index'
 
 english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
 one_way_anova = f_oneway(english_value_list, italian_value_list)
 print('One-Way ANOVA for Condition F English/Italian speakers:')
@@ -742,12 +773,18 @@ ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition F')
 plt.ylim([0, 210])
+x = np.arange(len(labels))  # the label locations
+width = 0.35  # the width of the bars
+rects_english = ax.bar(x - width/2, english_value_list, width, label='English')
+rects_italian = ax.bar(x + width/2, italian_value_list, width, label='Italian')
+ax.bar_label(rects_english, padding=1, color='blue')
+ax.bar_label(rects_italian, padding=1, color='red')
 plt.savefig('./results/condition_f_combined.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 z_scored_data_frame_italian = data_frame_italian.apply(zscore)
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -853,7 +890,7 @@ data_frame_italian = pd.DataFrame.from_dict(data=ratings_italian, orient='index'
 
 english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
 one_way_anova = f_oneway(english_value_list, italian_value_list)
 print('One-Way ANOVA for Condition G English/Italian speakers:')
@@ -867,12 +904,18 @@ ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition G')
 plt.ylim([0, 210])
+x = np.arange(len(labels))  # the label locations
+width = 0.35  # the width of the bars
+rects_english = ax.bar(x - width/2, english_value_list, width, label='English')
+rects_italian = ax.bar(x + width/2, italian_value_list, width, label='Italian')
+ax.bar_label(rects_english, padding=1, color='blue')
+ax.bar_label(rects_italian, padding=1, color='red')
 plt.savefig('./results/condition_g_combined.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 z_scored_data_frame_italian = data_frame_italian.apply(zscore)
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
@@ -978,7 +1021,7 @@ data_frame_italian = pd.DataFrame.from_dict(data=ratings_italian, orient='index'
 
 english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
 one_way_anova = f_oneway(english_value_list, italian_value_list)
 print('One-Way ANOVA for Condition H English/Italian speakers:')
@@ -992,12 +1035,18 @@ ax.set_ylabel('Frequency')
 ax.set_xlabel('Responses (unnatural to perfectly natural)')
 ax.set_title('Likert Scores for Condition H')
 plt.ylim([0, 210])
+x = np.arange(len(labels))  # the label locations
+width = 0.35  # the width of the bars
+rects_english = ax.bar(x - width/2, english_value_list, width, label='English')
+rects_italian = ax.bar(x + width/2, italian_value_list, width, label='Italian')
+ax.bar_label(rects_english, padding=1, color='blue')
+ax.bar_label(rects_italian, padding=1, color='red')
 plt.savefig('./results/condition_h_combined.png')
 
 # Create z-scored chart
 z_scored_data_frame = data_frame.apply(zscore)
 z_scored_data_frame_italian = data_frame_italian.apply(zscore)
-labels = ['1', '2', '3', '4', '5', '6', '7']
+labels = [1, 2, 3, 4, 5, 6, 7]
 z_scores = [z_scored_data_frame.iloc[6][0], z_scored_data_frame.iloc[5][0], z_scored_data_frame.iloc[4][0],
             z_scored_data_frame.iloc[3][0], z_scored_data_frame.iloc[2][0], z_scored_data_frame.iloc[1][0],
             z_scored_data_frame.iloc[0][0]]
