@@ -1,6 +1,7 @@
 import pandas as pd, os
 import matplotlib.pyplot as plt
 from scipy.stats import zscore
+from scipy.stats import f_oneway
 from itertools import islice
 from dotenv import load_dotenv
 
@@ -104,6 +105,11 @@ english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
 labels = ['1', '2', '3', '4', '5', '6', '7']
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
+one_way_anova = f_oneway(english_value_list, italian_value_list)
+print('One-Way ANOVA for Condition A English/Italian speakers:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
 
 # Create raw chart
 ax = data_frame_combined.plot.bar(rot=0)
@@ -224,6 +230,11 @@ english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
 labels = ['1', '2', '3', '4', '5', '6', '7']
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
+one_way_anova = f_oneway(english_value_list, italian_value_list)
+print('One-Way ANOVA for Condition B English/Italian speakers:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
 
 # Create raw chart
 ax = data_frame_combined.plot.bar(rot=0)
@@ -344,6 +355,11 @@ english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
 labels = ['1', '2', '3', '4', '5', '6', '7']
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
+one_way_anova = f_oneway(english_value_list, italian_value_list)
+print('One-Way ANOVA for Condition C English/Italian speakers:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
 
 # Create raw chart
 ax = data_frame_combined.plot.bar(rot=0)
@@ -464,6 +480,11 @@ english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
 labels = ['1', '2', '3', '4', '5', '6', '7']
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
+one_way_anova = f_oneway(english_value_list, italian_value_list)
+print('One-Way ANOVA for Condition D English/Italian speakers:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
 
 # Create raw chart
 ax = data_frame_combined.plot.bar(rot=0)
@@ -584,6 +605,11 @@ english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
 labels = ['1', '2', '3', '4', '5', '6', '7']
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
+one_way_anova = f_oneway(english_value_list, italian_value_list)
+print('One-Way ANOVA for Condition E English/Italian speakers:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
 
 # Create raw chart
 ax = data_frame_combined.plot.bar(rot=0)
@@ -704,6 +730,11 @@ english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
 labels = ['1', '2', '3', '4', '5', '6', '7']
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
+one_way_anova = f_oneway(english_value_list, italian_value_list)
+print('One-Way ANOVA for Condition F English/Italian speakers:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
 
 # Create raw chart
 ax = data_frame_combined.plot.bar(rot=0)
@@ -824,6 +855,11 @@ english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
 labels = ['1', '2', '3', '4', '5', '6', '7']
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
+one_way_anova = f_oneway(english_value_list, italian_value_list)
+print('One-Way ANOVA for Condition G English/Italian speakers:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
 
 # Create raw chart
 ax = data_frame_combined.plot.bar(rot=0)
@@ -944,6 +980,11 @@ english_value_list = list(ratings.values())[::-1]
 italian_value_list = list(ratings_italian.values())[::-1]
 labels = ['1', '2', '3', '4', '5', '6', '7']
 data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
+one_way_anova = f_oneway(english_value_list, italian_value_list)
+print('One-Way ANOVA for Condition H English/Italian speakers:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
 
 # Create raw chart
 ax = data_frame_combined.plot.bar(rot=0)
