@@ -304,8 +304,7 @@ def significant_difference(user_of_interest, condition):
     condition_full = 'cond_' + condition.lower()
     if abs(user_results[user_of_interest][condition_full] - all_user_results[condition_full]) > 2.5:
         print()
-        # print('OMG THE USER\'S ANSWERS DIFFER SIGNIFICANTLY FROM THE AVERAGE USER RESPONSE FOR CONDITION ' + condition + ' AHHHHHHHH!')
-        print('User\'s response differs signficantly from the average user response for condition ' + condition)
+        print('User\'s response differs significantly from the average user response for condition ' + condition)
         print('User MD5 hash: ' + user)
 
 
