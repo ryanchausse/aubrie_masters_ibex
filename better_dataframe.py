@@ -35,7 +35,8 @@ h_counter = 1
 with open(results_location) as f:
     for line in f:
         likert_score = 0
-        if 'https://ryanchausse.com/aubrie_masters/images/conversation_pics/' in line:
+        if ',Form,2,0,intro,NULL,age,' in line:
+            # first line of relevant results for user
             timestamp_and_md5 = line[:43:1]
             user_md5 = timestamp_and_md5.split(',')[1]
             if not user_md5_buffer:
@@ -55,6 +56,17 @@ with open(results_location) as f:
                 g_counter = 1
                 h_counter = 1
                 user_add_time_taken = 0
+            # Find age and add to user_results for this user
+            user_results['age'] = int(line.split('age,')[-1].strip())
+        if ',Form,2,0,intro,NULL,bilingual_languages,' in line:
+            user_results['bilingual_languages'] = line.split('bilingual_languages,')[-1].strip()
+        if ',Form,2,0,intro,NULL,bilingual,' in line:
+            user_results['bilingual'] = line.split('bilingual,')[-1].strip()
+        if ',Form,2,0,intro,NULL,EdL,' in line:
+            user_results['education_level'] = line.split('EdL,')[-1].strip()
+        if ',Form,2,0,intro,NULL,AoA,' in line:
+            user_results['age_of_acquisition'] = line.split('AoA,')[-1].strip()
+        if 'https://ryanchausse.com/aubrie_masters/images/conversation_pics/' in line:
             value_line = ''.join(islice(f, 1))
             likert_score_location = int(value_line.find(',NULL,NULL,'))
             if int(likert_score_location) != -1:
@@ -94,15 +106,18 @@ with open(results_location) as f:
 f.close()
 
 data_frame = pd.DataFrame(data=all_user_results)
-ordered_data_frame = data_frame[['md5_hash', 'total_time',
-                                'response_a1', 'response_a2', 'response_a3', 'response_a4',
-                                'response_b1', 'response_b2', 'response_b3', 'response_b4',
-                                'response_c1', 'response_c2', 'response_c3', 'response_c4',
-                                'response_d1', 'response_d2', 'response_d3', 'response_d4',
-                                'response_e1', 'response_e2', 'response_e3', 'response_e4',
-                                'response_f1', 'response_f2', 'response_f3', 'response_f4',
-                                'response_g1', 'response_g2', 'response_g3', 'response_g4',
-                                'response_h1', 'response_h2', 'response_h3', 'response_h4']]
+ordered_data_frame = data_frame[[
+    'md5_hash', 'total_time', 'age', 'age_of_acquisition',
+    'education_level', 'bilingual', 'bilingual_languages',
+    'response_a1', 'response_a2', 'response_a3', 'response_a4',
+    'response_b1', 'response_b2', 'response_b3', 'response_b4',
+    'response_c1', 'response_c2', 'response_c3', 'response_c4',
+    'response_d1', 'response_d2', 'response_d3', 'response_d4',
+    'response_e1', 'response_e2', 'response_e3', 'response_e4',
+    'response_f1', 'response_f2', 'response_f3', 'response_f4',
+    'response_g1', 'response_g2', 'response_g3', 'response_g4',
+    'response_h1', 'response_h2', 'response_h3', 'response_h4'
+]]
 ordered_data_frame.to_csv('./results/full_data.csv')
 print(ordered_data_frame)
 print("Done.")
