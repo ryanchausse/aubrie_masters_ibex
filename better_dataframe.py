@@ -1,0 +1,108 @@
+import pandas as pd, os, time, base64, pysftp, glob, datetime, pathlib
+import matplotlib.pyplot as plt
+from scipy.stats import zscore
+from dateutil import tz
+from itertools import islice
+from dotenv import load_dotenv
+
+print("This script will process the Likert scale results from Ibex Farm, categorize into three groups (acceptable, "
+      "neutral, and unnatural) and display them/save them to a file in the 'results' directory")
+
+# Assigning env variables for SFTP url, username, and password based on ENV variables
+load_dotenv(dotenv_path='.env')
+
+# Load all .env variables
+results_location = str(os.environ.get('RESULTS_LOCATION'))
+results_processed_location = str(os.environ.get('RESULTS_PROCESSED_LOCATION'))
+
+# First, create giant 2D matrix of all data in a pandas dataframe, then do operations on that matrix
+# Should look like:
+# MD5 hash, response_a_1, response_a_2, ... response_h_4
+
+user_md5_buffer = ''
+user_results = {}
+all_user_results = []
+user_add_time_taken = 0
+a_counter = 1
+b_counter = 1
+c_counter = 1
+d_counter = 1
+e_counter = 1
+f_counter = 1
+g_counter = 1
+h_counter = 1
+
+with open(results_location) as f:
+    for line in f:
+        likert_score = 0
+        if 'https://ryanchausse.com/aubrie_masters/images/conversation_pics/' in line:
+            timestamp_and_md5 = line[:43:1]
+            user_md5 = timestamp_and_md5.split(',')[1]
+            if not user_md5_buffer:
+                user_md5_buffer = user_md5
+                user_results = {'md5_hash': user_md5, 'total_time': 0}
+            if user_md5 != user_md5_buffer:
+                # Save user_results into list of dicts; start recording new experimental subject's results
+                user_results['total_time'] = round(user_add_time_taken / 1000 / 60, 2)  # Outputs minutes
+                all_user_results.append(user_results)
+                user_results = {'md5_hash': user_md5, 'total_time': 0}
+                a_counter = 1
+                b_counter = 1
+                c_counter = 1
+                d_counter = 1
+                e_counter = 1
+                f_counter = 1
+                g_counter = 1
+                h_counter = 1
+                user_add_time_taken = 0
+            value_line = ''.join(islice(f, 1))
+            likert_score_location = int(value_line.find(',NULL,NULL,'))
+            if int(likert_score_location) != -1:
+                likert_point_location = 11 + likert_score_location
+            else:
+                likert_score_location = int(value_line.find(',NULL,'))
+                likert_point_location = 6 + likert_score_location
+            likert_score += int(value_line[likert_point_location])
+            user_add_time_taken += int(value_line.split(',')[-1])
+            # print(line)
+            # print('value line: ' + value_line)
+            if 'cond=a' in line:
+                user_results['response_a' + str(a_counter)] = likert_score
+                a_counter += 1
+            if 'cond=b' in line:
+                user_results['response_b' + str(b_counter)] = likert_score
+                b_counter += 1
+            if 'cond=c' in line:
+                user_results['response_c' + str(c_counter)] = likert_score
+                c_counter += 1
+            if 'cond=d' in line:
+                user_results['response_d' + str(d_counter)] = likert_score
+                d_counter += 1
+            if 'cond=e' in line:
+                user_results['response_e' + str(e_counter)] = likert_score
+                e_counter += 1
+            if 'cond=f' in line:
+                user_results['response_f' + str(f_counter)] = likert_score
+                f_counter += 1
+            if 'cond=g' in line:
+                user_results['response_g' + str(g_counter)] = likert_score
+                g_counter += 1
+            if 'cond=h' in line:
+                user_results['response_h' + str(h_counter)] = likert_score
+                h_counter += 1
+            user_md5_buffer = user_md5
+f.close()
+
+data_frame = pd.DataFrame(data=all_user_results)
+ordered_data_frame = data_frame[['md5_hash', 'total_time',
+                                'response_a1', 'response_a2', 'response_a3', 'response_a4',
+                                'response_b1', 'response_b2', 'response_b3', 'response_b4',
+                                'response_c1', 'response_c2', 'response_c3', 'response_c4',
+                                'response_d1', 'response_d2', 'response_d3', 'response_d4',
+                                'response_e1', 'response_e2', 'response_e3', 'response_e4',
+                                'response_f1', 'response_f2', 'response_f3', 'response_f4',
+                                'response_g1', 'response_g2', 'response_g3', 'response_g4',
+                                'response_h1', 'response_h2', 'response_h3', 'response_h4']]
+ordered_data_frame.to_csv('./results/full_data.csv')
+print(ordered_data_frame)
+print("Done.")
