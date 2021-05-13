@@ -10,3 +10,4 @@ gitpython
 matplotlib
 scipy
 numpy
+sklearn

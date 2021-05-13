@@ -1,5 +1,6 @@
 import pandas as pd, os, time, base64, pysftp, glob, datetime, pathlib
 import matplotlib.pyplot as plt
+from sklearn import preprocessing
 from scipy.stats import zscore
 from dateutil import tz
 from itertools import islice
@@ -266,7 +267,7 @@ with open(results_location_italian) as f:
 f.close()
 
 data_frame = pd.DataFrame(data=all_user_results)
-ordered_data_frame = data_frame[[
+ordered_data_frame_italian = data_frame[[
     'md5_hash', 'total_time', 'age', 'english_level',
     'age_of_acquisition', 'bilingual', 'bilingual_languages',
     'time_in_english_country', 'english_history',
@@ -284,6 +285,145 @@ ordered_data_frame = data_frame[[
     'response_g1', 'response_g2', 'response_g3', 'response_g4',
     'response_h1', 'response_h2', 'response_h3', 'response_h4'
 ]]
-ordered_data_frame.to_csv('./results/full_data_italian.csv')
-print(ordered_data_frame)
+ordered_data_frame_italian.to_csv('./results/full_data_italian.csv')
+print(ordered_data_frame_italian)
+
+# Now make a chart for each condition with three groups:
+# english native speakers
+# low competence english speaking italians (= A1-A2, B1-B2)
+# high competence english speaking italians (= C1-C2)
+
+# Create new dataframe like:
+# english_competence_level avg_score_a avg_score_b ... avg_score_h
+
+ordered_data_frame['avg_a'] = ordered_data_frame[['response_a1', 'response_a2', 'response_a3', 'response_a4']].mean(axis=1)
+ordered_data_frame['avg_b'] = ordered_data_frame[['response_b1', 'response_b2', 'response_b3', 'response_b4']].mean(axis=1)
+ordered_data_frame['avg_c'] = ordered_data_frame[['response_c1', 'response_c2', 'response_c3', 'response_c4']].mean(axis=1)
+ordered_data_frame['avg_d'] = ordered_data_frame[['response_d1', 'response_d2', 'response_d3', 'response_d4']].mean(axis=1)
+ordered_data_frame['avg_e'] = ordered_data_frame[['response_e1', 'response_e2', 'response_e3', 'response_e4']].mean(axis=1)
+ordered_data_frame['avg_f'] = ordered_data_frame[['response_f1', 'response_f2', 'response_f3', 'response_f4']].mean(axis=1)
+ordered_data_frame['avg_g'] = ordered_data_frame[['response_g1', 'response_g2', 'response_g3', 'response_g4']].mean(axis=1)
+ordered_data_frame['avg_h'] = ordered_data_frame[['response_h1', 'response_h2', 'response_h3', 'response_h4']].mean(axis=1)
+
+ordered_data_frame_italian['avg_a'] = ordered_data_frame_italian[['response_a1', 'response_a2', 'response_a3', 'response_a4']].mean(axis=1)
+ordered_data_frame_italian['avg_b'] = ordered_data_frame_italian[['response_b1', 'response_b2', 'response_b3', 'response_b4']].mean(axis=1)
+ordered_data_frame_italian['avg_c'] = ordered_data_frame_italian[['response_c1', 'response_c2', 'response_c3', 'response_c4']].mean(axis=1)
+ordered_data_frame_italian['avg_d'] = ordered_data_frame_italian[['response_d1', 'response_d2', 'response_d3', 'response_d4']].mean(axis=1)
+ordered_data_frame_italian['avg_e'] = ordered_data_frame_italian[['response_e1', 'response_e2', 'response_e3', 'response_e4']].mean(axis=1)
+ordered_data_frame_italian['avg_f'] = ordered_data_frame_italian[['response_f1', 'response_f2', 'response_f3', 'response_f4']].mean(axis=1)
+ordered_data_frame_italian['avg_g'] = ordered_data_frame_italian[['response_g1', 'response_g2', 'response_g3', 'response_g4']].mean(axis=1)
+ordered_data_frame_italian['avg_h'] = ordered_data_frame_italian[['response_h1', 'response_h2', 'response_h3', 'response_h4']].mean(axis=1)
+
+low_competence_italian = ordered_data_frame_italian.loc[ordered_data_frame_italian['english_level'].isin(['A1-A2', 'B1-B2'])]
+high_competence_italian = ordered_data_frame_italian.loc[ordered_data_frame_italian['english_level'] == 'C1-C2']
+
+competence_vs_avg_score_condition = [
+    {
+        'english_competence_level': 'Native',
+        'condition_a': ordered_data_frame["avg_a"].mean(),
+        'condition_b': ordered_data_frame["avg_b"].mean(),
+        'condition_c': ordered_data_frame["avg_c"].mean(),
+        'condition_d': ordered_data_frame["avg_d"].mean(),
+        'condition_e': ordered_data_frame["avg_e"].mean(),
+        'condition_f': ordered_data_frame["avg_f"].mean(),
+        'condition_g': ordered_data_frame["avg_g"].mean(),
+        'condition_h': ordered_data_frame["avg_h"].mean()
+     },
+    {
+        'english_competence_level': 'Low competence',
+        'condition_a': low_competence_italian["avg_a"].mean(),
+        'condition_b': low_competence_italian["avg_b"].mean(),
+        'condition_c': low_competence_italian["avg_c"].mean(),
+        'condition_d': low_competence_italian["avg_d"].mean(),
+        'condition_e': low_competence_italian["avg_e"].mean(),
+        'condition_f': low_competence_italian["avg_f"].mean(),
+        'condition_g': low_competence_italian["avg_g"].mean(),
+        'condition_h': low_competence_italian["avg_h"].mean()
+    },
+    {
+        'english_competence_level': 'High competence',
+        'condition_a': high_competence_italian["avg_a"].mean(),
+        'condition_b': high_competence_italian["avg_b"].mean(),
+        'condition_c': high_competence_italian["avg_c"].mean(),
+        'condition_d': high_competence_italian["avg_d"].mean(),
+        'condition_e': high_competence_italian["avg_e"].mean(),
+        'condition_f': high_competence_italian["avg_f"].mean(),
+        'condition_g': high_competence_italian["avg_g"].mean(),
+        'condition_h': high_competence_italian["avg_h"].mean()
+    }
+]
+
+# Create chart
+data_frame_combined = {
+    'Native': [
+        ordered_data_frame["avg_a"].mean(),
+        ordered_data_frame["avg_b"].mean(),
+        ordered_data_frame["avg_c"].mean(),
+        ordered_data_frame["avg_d"].mean(),
+        ordered_data_frame["avg_e"].mean(),
+        ordered_data_frame["avg_f"].mean(),
+        ordered_data_frame["avg_g"].mean(),
+        ordered_data_frame["avg_h"].mean()
+    ],
+    'High competence (C1-C2)': [
+        high_competence_italian["avg_a"].mean(),
+        high_competence_italian["avg_b"].mean(),
+        high_competence_italian["avg_c"].mean(),
+        high_competence_italian["avg_d"].mean(),
+        high_competence_italian["avg_e"].mean(),
+        high_competence_italian["avg_f"].mean(),
+        high_competence_italian["avg_g"].mean(),
+        high_competence_italian["avg_h"].mean()
+    ],
+    'Low competence (A1-B2)': [
+        low_competence_italian["avg_a"].mean(),
+        low_competence_italian["avg_b"].mean(),
+        low_competence_italian["avg_c"].mean(),
+        low_competence_italian["avg_d"].mean(),
+        low_competence_italian["avg_e"].mean(),
+        low_competence_italian["avg_f"].mean(),
+        low_competence_italian["avg_g"].mean(),
+        low_competence_italian["avg_h"].mean()
+    ]
+}
+
+labels = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+]
+
+chart_data_frame = pd.DataFrame(data_frame_combined, index=labels)
+ax = chart_data_frame.plot.bar(rot=0)
+ax.set_ylabel('Average Response Score')
+ax.set_xlabel('Condition')
+ax.set_title('Likert Scores by English Level per Condition')
+plt.ylim([3, 7])
+plt.savefig('./results/english_competence_and_condition_combined.png')
+
+
+# # Create raw chart
+# english_value_list = list(ratings.values())[::-1]
+# italian_value_list = list(ratings_italian.values())[::-1]
+# labels = [1, 2, 3, 4, 5, 6, 7]
+# data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
+# ax = data_frame_combined.plot.bar(rot=0)
+# ax.set_ylabel('Frequency')
+# ax.set_xlabel('Responses (unnatural to perfectly natural)')
+# ax.set_title('Likert Scores for Condition G')
+# plt.ylim([0, 210])
+# x = np.arange(len(labels))  # the label locations
+# width = 0.35  # the width of the bars
+# rects_english = ax.bar(x - width/2, english_value_list, width, label='English')
+# rects_italian = ax.bar(x + width/2, italian_value_list, width, label='Italian')
+# ax.bar_label(rects_english, padding=1, color='blue')
+# ax.bar_label(rects_italian, padding=1, color='red')
+# plt.savefig('./results/condition_g_combined.png')
+
+
 print("Done.")
