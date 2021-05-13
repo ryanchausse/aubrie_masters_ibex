@@ -66,6 +66,12 @@ with open(results_location) as f:
             user_results['education_level'] = line.split('EdL,')[-1].strip()
         if ',Form,2,0,intro,NULL,AoA,' in line:
             user_results['age_of_acquisition'] = line.split('AoA,')[-1].strip()
+        if ',Form,5,0,feedback,NULL,fdbk_problems_difficulties,' in line:
+            user_results['problems_difficulties'] = line.split('fdbk_problems_difficulties,')[-1].strip()
+        if ',Form,5,0,feedback,NULL,fdbk_experiment_about,' in line:
+            user_results['experiment_about'] = line.split('fdbk_experiment_about,')[-1].strip()
+        if ',Form,5,0,feedback,NULL,fdbk_other_notes_questions,' in line:
+            user_results['other_notes_questions'] = line.split('fdbk_other_notes_questions,')[-1].strip()
         if 'https://ryanchausse.com/aubrie_masters/images/conversation_pics/' in line:
             value_line = ''.join(islice(f, 1))
             likert_score_location = int(value_line.find(',NULL,NULL,'))
@@ -109,6 +115,7 @@ data_frame = pd.DataFrame(data=all_user_results)
 ordered_data_frame = data_frame[[
     'md5_hash', 'total_time', 'age', 'age_of_acquisition',
     'education_level', 'bilingual', 'bilingual_languages',
+    'problems_difficulties', 'experiment_about', 'other_notes_questions',
     'response_a1', 'response_a2', 'response_a3', 'response_a4',
     'response_b1', 'response_b2', 'response_b3', 'response_b4',
     'response_c1', 'response_c2', 'response_c3', 'response_c4',
