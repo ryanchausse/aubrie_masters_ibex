@@ -532,4 +532,230 @@ ax.set_title('Average Normalized Scores per Condition for English Speakers')
 plt.savefig('./results/english_normalized_by_competence_and_condition_combined.png')
 
 
+# PoC for English native speakers complete. Now, do High and Low competence english speaking Italian groups
+# and plot on same chart
+
+high_competence_italian['response_a1_normalized'] = ''
+high_competence_italian['response_a2_normalized'] = ''
+high_competence_italian['response_a3_normalized'] = ''
+high_competence_italian['response_a4_normalized'] = ''
+high_competence_italian['response_b1_normalized'] = ''
+high_competence_italian['response_b2_normalized'] = ''
+high_competence_italian['response_b3_normalized'] = ''
+high_competence_italian['response_b4_normalized'] = ''
+high_competence_italian['response_c1_normalized'] = ''
+high_competence_italian['response_c2_normalized'] = ''
+high_competence_italian['response_c3_normalized'] = ''
+high_competence_italian['response_c4_normalized'] = ''
+high_competence_italian['response_d1_normalized'] = ''
+high_competence_italian['response_d2_normalized'] = ''
+high_competence_italian['response_d3_normalized'] = ''
+high_competence_italian['response_d4_normalized'] = ''
+high_competence_italian['response_e1_normalized'] = ''
+high_competence_italian['response_e2_normalized'] = ''
+high_competence_italian['response_e3_normalized'] = ''
+high_competence_italian['response_e4_normalized'] = ''
+high_competence_italian['response_f1_normalized'] = ''
+high_competence_italian['response_f2_normalized'] = ''
+high_competence_italian['response_f3_normalized'] = ''
+high_competence_italian['response_f4_normalized'] = ''
+high_competence_italian['response_g1_normalized'] = ''
+high_competence_italian['response_g2_normalized'] = ''
+high_competence_italian['response_g3_normalized'] = ''
+high_competence_italian['response_g4_normalized'] = ''
+high_competence_italian['response_h1_normalized'] = ''
+high_competence_italian['response_h2_normalized'] = ''
+high_competence_italian['response_h3_normalized'] = ''
+high_competence_italian['response_h4_normalized'] = ''
+
+for index, row in high_competence_italian.iterrows():
+    rowwise_raw_scores = list()
+    rowwise_raw_scores.append([row['response_a1'], row['response_a2'], row['response_a3'], row['response_a4']])
+    rowwise_raw_scores.append([row['response_b1'], row['response_b2'], row['response_b3'], row['response_b4']])
+    rowwise_raw_scores.append([row['response_c1'], row['response_c2'], row['response_c3'], row['response_c4']])
+    rowwise_raw_scores.append([row['response_d1'], row['response_d2'], row['response_d3'], row['response_d4']])
+    rowwise_raw_scores.append([row['response_e1'], row['response_e2'], row['response_e3'], row['response_e4']])
+    rowwise_raw_scores.append([row['response_f1'], row['response_f2'], row['response_f3'], row['response_f4']])
+    rowwise_raw_scores.append([row['response_g1'], row['response_g2'], row['response_g3'], row['response_g4']])
+    rowwise_raw_scores.append([row['response_h1'], row['response_h2'], row['response_h3'], row['response_h4']])
+    # Now normalize these scores (in this per-user range/variance context) and append to dataframe
+    scalar = preprocessing.StandardScaler().fit(rowwise_raw_scores)
+    x_scaled = scalar.transform(rowwise_raw_scores)
+    high_competence_italian.loc[index, 'response_a1_normalized'] = x_scaled[0][0]
+    high_competence_italian.loc[index, 'response_a2_normalized'] = x_scaled[0][1]
+    high_competence_italian.loc[index, 'response_a3_normalized'] = x_scaled[0][2]
+    high_competence_italian.loc[index, 'response_a4_normalized'] = x_scaled[0][3]
+    high_competence_italian.loc[index, 'response_b1_normalized'] = x_scaled[1][0]
+    high_competence_italian.loc[index, 'response_b2_normalized'] = x_scaled[1][1]
+    high_competence_italian.loc[index, 'response_b3_normalized'] = x_scaled[1][2]
+    high_competence_italian.loc[index, 'response_b4_normalized'] = x_scaled[1][3]
+    high_competence_italian.loc[index, 'response_c1_normalized'] = x_scaled[2][0]
+    high_competence_italian.loc[index, 'response_c2_normalized'] = x_scaled[2][1]
+    high_competence_italian.loc[index, 'response_c3_normalized'] = x_scaled[2][2]
+    high_competence_italian.loc[index, 'response_c4_normalized'] = x_scaled[2][3]
+    high_competence_italian.loc[index, 'response_d1_normalized'] = x_scaled[3][0]
+    high_competence_italian.loc[index, 'response_d2_normalized'] = x_scaled[3][1]
+    high_competence_italian.loc[index, 'response_d3_normalized'] = x_scaled[3][2]
+    high_competence_italian.loc[index, 'response_d4_normalized'] = x_scaled[3][3]
+    high_competence_italian.loc[index, 'response_e1_normalized'] = x_scaled[4][0]
+    high_competence_italian.loc[index, 'response_e2_normalized'] = x_scaled[4][1]
+    high_competence_italian.loc[index, 'response_e3_normalized'] = x_scaled[4][2]
+    high_competence_italian.loc[index, 'response_e4_normalized'] = x_scaled[4][3]
+    high_competence_italian.loc[index, 'response_f1_normalized'] = x_scaled[5][0]
+    high_competence_italian.loc[index, 'response_f2_normalized'] = x_scaled[5][1]
+    high_competence_italian.loc[index, 'response_f3_normalized'] = x_scaled[5][2]
+    high_competence_italian.loc[index, 'response_f4_normalized'] = x_scaled[5][3]
+    high_competence_italian.loc[index, 'response_g1_normalized'] = x_scaled[6][0]
+    high_competence_italian.loc[index, 'response_g2_normalized'] = x_scaled[6][1]
+    high_competence_italian.loc[index, 'response_g3_normalized'] = x_scaled[6][2]
+    high_competence_italian.loc[index, 'response_g4_normalized'] = x_scaled[6][3]
+    high_competence_italian.loc[index, 'response_h1_normalized'] = x_scaled[7][0]
+    high_competence_italian.loc[index, 'response_h2_normalized'] = x_scaled[7][1]
+    high_competence_italian.loc[index, 'response_h3_normalized'] = x_scaled[7][2]
+    high_competence_italian.loc[index, 'response_h4_normalized'] = x_scaled[7][3]
+
+high_competence_italian['avg_a_normalized'] = high_competence_italian[['response_a1_normalized', 'response_a2_normalized', 'response_a3_normalized', 'response_a4_normalized']].mean(axis=1)
+high_competence_italian['avg_b_normalized'] = high_competence_italian[['response_b1_normalized', 'response_b2_normalized', 'response_b3_normalized', 'response_b4_normalized']].mean(axis=1)
+high_competence_italian['avg_c_normalized'] = high_competence_italian[['response_c1_normalized', 'response_c2_normalized', 'response_c3_normalized', 'response_c4_normalized']].mean(axis=1)
+high_competence_italian['avg_d_normalized'] = high_competence_italian[['response_d1_normalized', 'response_d2_normalized', 'response_d3_normalized', 'response_d4_normalized']].mean(axis=1)
+high_competence_italian['avg_e_normalized'] = high_competence_italian[['response_e1_normalized', 'response_e2_normalized', 'response_e3_normalized', 'response_e4_normalized']].mean(axis=1)
+high_competence_italian['avg_f_normalized'] = high_competence_italian[['response_f1_normalized', 'response_f2_normalized', 'response_f3_normalized', 'response_f4_normalized']].mean(axis=1)
+high_competence_italian['avg_g_normalized'] = high_competence_italian[['response_g1_normalized', 'response_g2_normalized', 'response_g3_normalized', 'response_g4_normalized']].mean(axis=1)
+high_competence_italian['avg_h_normalized'] = high_competence_italian[['response_h1_normalized', 'response_h2_normalized', 'response_h3_normalized', 'response_h4_normalized']].mean(axis=1)
+
+print(high_competence_italian)
+high_competence_italian.to_csv('./results/full_data_high_competence.csv')
+
+low_competence_italian['response_a1_normalized'] = ''
+low_competence_italian['response_a2_normalized'] = ''
+low_competence_italian['response_a3_normalized'] = ''
+low_competence_italian['response_a4_normalized'] = ''
+low_competence_italian['response_b1_normalized'] = ''
+low_competence_italian['response_b2_normalized'] = ''
+low_competence_italian['response_b3_normalized'] = ''
+low_competence_italian['response_b4_normalized'] = ''
+low_competence_italian['response_c1_normalized'] = ''
+low_competence_italian['response_c2_normalized'] = ''
+low_competence_italian['response_c3_normalized'] = ''
+low_competence_italian['response_c4_normalized'] = ''
+low_competence_italian['response_d1_normalized'] = ''
+low_competence_italian['response_d2_normalized'] = ''
+low_competence_italian['response_d3_normalized'] = ''
+low_competence_italian['response_d4_normalized'] = ''
+low_competence_italian['response_e1_normalized'] = ''
+low_competence_italian['response_e2_normalized'] = ''
+low_competence_italian['response_e3_normalized'] = ''
+low_competence_italian['response_e4_normalized'] = ''
+low_competence_italian['response_f1_normalized'] = ''
+low_competence_italian['response_f2_normalized'] = ''
+low_competence_italian['response_f3_normalized'] = ''
+low_competence_italian['response_f4_normalized'] = ''
+low_competence_italian['response_g1_normalized'] = ''
+low_competence_italian['response_g2_normalized'] = ''
+low_competence_italian['response_g3_normalized'] = ''
+low_competence_italian['response_g4_normalized'] = ''
+low_competence_italian['response_h1_normalized'] = ''
+low_competence_italian['response_h2_normalized'] = ''
+low_competence_italian['response_h3_normalized'] = ''
+low_competence_italian['response_h4_normalized'] = ''
+
+for index, row in low_competence_italian.iterrows():
+    rowwise_raw_scores = list()
+    rowwise_raw_scores.append([row['response_a1'], row['response_a2'], row['response_a3'], row['response_a4']])
+    rowwise_raw_scores.append([row['response_b1'], row['response_b2'], row['response_b3'], row['response_b4']])
+    rowwise_raw_scores.append([row['response_c1'], row['response_c2'], row['response_c3'], row['response_c4']])
+    rowwise_raw_scores.append([row['response_d1'], row['response_d2'], row['response_d3'], row['response_d4']])
+    rowwise_raw_scores.append([row['response_e1'], row['response_e2'], row['response_e3'], row['response_e4']])
+    rowwise_raw_scores.append([row['response_f1'], row['response_f2'], row['response_f3'], row['response_f4']])
+    rowwise_raw_scores.append([row['response_g1'], row['response_g2'], row['response_g3'], row['response_g4']])
+    rowwise_raw_scores.append([row['response_h1'], row['response_h2'], row['response_h3'], row['response_h4']])
+    # Now normalize these scores (in this per-user range/variance context) and append to dataframe
+    scalar = preprocessing.StandardScaler().fit(rowwise_raw_scores)
+    x_scaled = scalar.transform(rowwise_raw_scores)
+    low_competence_italian.loc[index, 'response_a1_normalized'] = x_scaled[0][0]
+    low_competence_italian.loc[index, 'response_a2_normalized'] = x_scaled[0][1]
+    low_competence_italian.loc[index, 'response_a3_normalized'] = x_scaled[0][2]
+    low_competence_italian.loc[index, 'response_a4_normalized'] = x_scaled[0][3]
+    low_competence_italian.loc[index, 'response_b1_normalized'] = x_scaled[1][0]
+    low_competence_italian.loc[index, 'response_b2_normalized'] = x_scaled[1][1]
+    low_competence_italian.loc[index, 'response_b3_normalized'] = x_scaled[1][2]
+    low_competence_italian.loc[index, 'response_b4_normalized'] = x_scaled[1][3]
+    low_competence_italian.loc[index, 'response_c1_normalized'] = x_scaled[2][0]
+    low_competence_italian.loc[index, 'response_c2_normalized'] = x_scaled[2][1]
+    low_competence_italian.loc[index, 'response_c3_normalized'] = x_scaled[2][2]
+    low_competence_italian.loc[index, 'response_c4_normalized'] = x_scaled[2][3]
+    low_competence_italian.loc[index, 'response_d1_normalized'] = x_scaled[3][0]
+    low_competence_italian.loc[index, 'response_d2_normalized'] = x_scaled[3][1]
+    low_competence_italian.loc[index, 'response_d3_normalized'] = x_scaled[3][2]
+    low_competence_italian.loc[index, 'response_d4_normalized'] = x_scaled[3][3]
+    low_competence_italian.loc[index, 'response_e1_normalized'] = x_scaled[4][0]
+    low_competence_italian.loc[index, 'response_e2_normalized'] = x_scaled[4][1]
+    low_competence_italian.loc[index, 'response_e3_normalized'] = x_scaled[4][2]
+    low_competence_italian.loc[index, 'response_e4_normalized'] = x_scaled[4][3]
+    low_competence_italian.loc[index, 'response_f1_normalized'] = x_scaled[5][0]
+    low_competence_italian.loc[index, 'response_f2_normalized'] = x_scaled[5][1]
+    low_competence_italian.loc[index, 'response_f3_normalized'] = x_scaled[5][2]
+    low_competence_italian.loc[index, 'response_f4_normalized'] = x_scaled[5][3]
+    low_competence_italian.loc[index, 'response_g1_normalized'] = x_scaled[6][0]
+    low_competence_italian.loc[index, 'response_g2_normalized'] = x_scaled[6][1]
+    low_competence_italian.loc[index, 'response_g3_normalized'] = x_scaled[6][2]
+    low_competence_italian.loc[index, 'response_g4_normalized'] = x_scaled[6][3]
+    low_competence_italian.loc[index, 'response_h1_normalized'] = x_scaled[7][0]
+    low_competence_italian.loc[index, 'response_h2_normalized'] = x_scaled[7][1]
+    low_competence_italian.loc[index, 'response_h3_normalized'] = x_scaled[7][2]
+    low_competence_italian.loc[index, 'response_h4_normalized'] = x_scaled[7][3]
+
+low_competence_italian['avg_a_normalized'] = low_competence_italian[['response_a1_normalized', 'response_a2_normalized', 'response_a3_normalized', 'response_a4_normalized']].mean(axis=1)
+low_competence_italian['avg_b_normalized'] = low_competence_italian[['response_b1_normalized', 'response_b2_normalized', 'response_b3_normalized', 'response_b4_normalized']].mean(axis=1)
+low_competence_italian['avg_c_normalized'] = low_competence_italian[['response_c1_normalized', 'response_c2_normalized', 'response_c3_normalized', 'response_c4_normalized']].mean(axis=1)
+low_competence_italian['avg_d_normalized'] = low_competence_italian[['response_d1_normalized', 'response_d2_normalized', 'response_d3_normalized', 'response_d4_normalized']].mean(axis=1)
+low_competence_italian['avg_e_normalized'] = low_competence_italian[['response_e1_normalized', 'response_e2_normalized', 'response_e3_normalized', 'response_e4_normalized']].mean(axis=1)
+low_competence_italian['avg_f_normalized'] = low_competence_italian[['response_f1_normalized', 'response_f2_normalized', 'response_f3_normalized', 'response_f4_normalized']].mean(axis=1)
+low_competence_italian['avg_g_normalized'] = low_competence_italian[['response_g1_normalized', 'response_g2_normalized', 'response_g3_normalized', 'response_g4_normalized']].mean(axis=1)
+low_competence_italian['avg_h_normalized'] = low_competence_italian[['response_h1_normalized', 'response_h2_normalized', 'response_h3_normalized', 'response_h4_normalized']].mean(axis=1)
+
+print(low_competence_italian)
+low_competence_italian.to_csv('./results/full_data_low_competence.csv')
+
+# Create chart
+data_frame_combined = {
+    'Native': [
+        ordered_data_frame["avg_a_normalized"].mean(),
+        ordered_data_frame["avg_b_normalized"].mean(),
+        ordered_data_frame["avg_c_normalized"].mean(),
+        ordered_data_frame["avg_d_normalized"].mean(),
+        ordered_data_frame["avg_e_normalized"].mean(),
+        ordered_data_frame["avg_f_normalized"].mean(),
+        ordered_data_frame["avg_g_normalized"].mean(),
+        ordered_data_frame["avg_h_normalized"].mean()
+    ],
+    'High competence (C1-C2)': [
+        high_competence_italian["avg_a_normalized"].mean(),
+        high_competence_italian["avg_b_normalized"].mean(),
+        high_competence_italian["avg_c_normalized"].mean(),
+        high_competence_italian["avg_d_normalized"].mean(),
+        high_competence_italian["avg_e_normalized"].mean(),
+        high_competence_italian["avg_f_normalized"].mean(),
+        high_competence_italian["avg_g_normalized"].mean(),
+        high_competence_italian["avg_h_normalized"].mean()
+    ],
+    'Low competence (A1-B2)': [
+        low_competence_italian["avg_a_normalized"].mean(),
+        low_competence_italian["avg_b_normalized"].mean(),
+        low_competence_italian["avg_c_normalized"].mean(),
+        low_competence_italian["avg_d_normalized"].mean(),
+        low_competence_italian["avg_e_normalized"].mean(),
+        low_competence_italian["avg_f_normalized"].mean(),
+        low_competence_italian["avg_g_normalized"].mean(),
+        low_competence_italian["avg_h_normalized"].mean()
+    ]
+}
+
+chart_data_frame = pd.DataFrame(data_frame_combined, index=labels)
+ax = chart_data_frame.plot.bar(rot=0)
+ax.set_ylabel('Average Group Score')
+ax.set_xlabel('Condition')
+ax.set_title('Average User-Normalized Scores per Condition')
+plt.savefig('./results/all_normalized_by_competence_and_condition_combined.png')
+
 print("Done.")
