@@ -1,4 +1,4 @@
-import pandas as pd, os, time, base64, pysftp, glob, datetime, pathlib
+import pandas as pd, numpy as np, os, time, base64, pysftp, glob, datetime, pathlib
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from scipy.stats import zscore
@@ -406,24 +406,130 @@ ax.set_title('Likert Scores by English Level per Condition')
 plt.ylim([3, 7])
 plt.savefig('./results/english_competence_and_condition_combined.png')
 
+# Try to create a minmax scaled score for each likert score per user in order to
+# fit responses on a normalized Gaussian distribution, then chart.
+ordered_data_frame['response_a1_normalized'] = ''
+ordered_data_frame['response_a2_normalized'] = ''
+ordered_data_frame['response_a3_normalized'] = ''
+ordered_data_frame['response_a4_normalized'] = ''
+ordered_data_frame['response_b1_normalized'] = ''
+ordered_data_frame['response_b2_normalized'] = ''
+ordered_data_frame['response_b3_normalized'] = ''
+ordered_data_frame['response_b4_normalized'] = ''
+ordered_data_frame['response_c1_normalized'] = ''
+ordered_data_frame['response_c2_normalized'] = ''
+ordered_data_frame['response_c3_normalized'] = ''
+ordered_data_frame['response_c4_normalized'] = ''
+ordered_data_frame['response_d1_normalized'] = ''
+ordered_data_frame['response_d2_normalized'] = ''
+ordered_data_frame['response_d3_normalized'] = ''
+ordered_data_frame['response_d4_normalized'] = ''
+ordered_data_frame['response_e1_normalized'] = ''
+ordered_data_frame['response_e2_normalized'] = ''
+ordered_data_frame['response_e3_normalized'] = ''
+ordered_data_frame['response_e4_normalized'] = ''
+ordered_data_frame['response_f1_normalized'] = ''
+ordered_data_frame['response_f2_normalized'] = ''
+ordered_data_frame['response_f3_normalized'] = ''
+ordered_data_frame['response_f4_normalized'] = ''
+ordered_data_frame['response_g1_normalized'] = ''
+ordered_data_frame['response_g2_normalized'] = ''
+ordered_data_frame['response_g3_normalized'] = ''
+ordered_data_frame['response_g4_normalized'] = ''
+ordered_data_frame['response_h1_normalized'] = ''
+ordered_data_frame['response_h2_normalized'] = ''
+ordered_data_frame['response_h3_normalized'] = ''
+ordered_data_frame['response_h4_normalized'] = ''
 
-# # Create raw chart
-# english_value_list = list(ratings.values())[::-1]
-# italian_value_list = list(ratings_italian.values())[::-1]
-# labels = [1, 2, 3, 4, 5, 6, 7]
-# data_frame_combined = pd.DataFrame({'English': english_value_list, 'Italian': italian_value_list}, index=labels)
-# ax = data_frame_combined.plot.bar(rot=0)
-# ax.set_ylabel('Frequency')
-# ax.set_xlabel('Responses (unnatural to perfectly natural)')
-# ax.set_title('Likert Scores for Condition G')
-# plt.ylim([0, 210])
-# x = np.arange(len(labels))  # the label locations
-# width = 0.35  # the width of the bars
-# rects_english = ax.bar(x - width/2, english_value_list, width, label='English')
-# rects_italian = ax.bar(x + width/2, italian_value_list, width, label='Italian')
-# ax.bar_label(rects_english, padding=1, color='blue')
-# ax.bar_label(rects_italian, padding=1, color='red')
-# plt.savefig('./results/condition_g_combined.png')
+for index, row in ordered_data_frame.iterrows():
+    rowwise_raw_scores = list()
+    rowwise_raw_scores.append([row['response_a1'], row['response_a2'], row['response_a3'], row['response_a4']])
+    rowwise_raw_scores.append([row['response_b1'], row['response_b2'], row['response_b3'], row['response_b4']])
+    rowwise_raw_scores.append([row['response_c1'], row['response_c2'], row['response_c3'], row['response_c4']])
+    rowwise_raw_scores.append([row['response_d1'], row['response_d2'], row['response_d3'], row['response_d4']])
+    rowwise_raw_scores.append([row['response_e1'], row['response_e2'], row['response_e3'], row['response_e4']])
+    rowwise_raw_scores.append([row['response_f1'], row['response_f2'], row['response_f3'], row['response_f4']])
+    rowwise_raw_scores.append([row['response_g1'], row['response_g2'], row['response_g3'], row['response_g4']])
+    rowwise_raw_scores.append([row['response_h1'], row['response_h2'], row['response_h3'], row['response_h4']])
+    # Now normalize these scores (in this per-user range/variance context) and append to dataframe
+    scalar = preprocessing.StandardScaler().fit(rowwise_raw_scores)
+    x_scaled = scalar.transform(rowwise_raw_scores)
+    ordered_data_frame.loc[index, 'response_a1_normalized'] = x_scaled[0][0]
+    ordered_data_frame.loc[index, 'response_a2_normalized'] = x_scaled[0][1]
+    ordered_data_frame.loc[index, 'response_a3_normalized'] = x_scaled[0][2]
+    ordered_data_frame.loc[index, 'response_a4_normalized'] = x_scaled[0][3]
+    ordered_data_frame.loc[index, 'response_b1_normalized'] = x_scaled[1][0]
+    ordered_data_frame.loc[index, 'response_b2_normalized'] = x_scaled[1][1]
+    ordered_data_frame.loc[index, 'response_b3_normalized'] = x_scaled[1][2]
+    ordered_data_frame.loc[index, 'response_b4_normalized'] = x_scaled[1][3]
+    ordered_data_frame.loc[index, 'response_c1_normalized'] = x_scaled[2][0]
+    ordered_data_frame.loc[index, 'response_c2_normalized'] = x_scaled[2][1]
+    ordered_data_frame.loc[index, 'response_c3_normalized'] = x_scaled[2][2]
+    ordered_data_frame.loc[index, 'response_c4_normalized'] = x_scaled[2][3]
+    ordered_data_frame.loc[index, 'response_d1_normalized'] = x_scaled[3][0]
+    ordered_data_frame.loc[index, 'response_d2_normalized'] = x_scaled[3][1]
+    ordered_data_frame.loc[index, 'response_d3_normalized'] = x_scaled[3][2]
+    ordered_data_frame.loc[index, 'response_d4_normalized'] = x_scaled[3][3]
+    ordered_data_frame.loc[index, 'response_e1_normalized'] = x_scaled[4][0]
+    ordered_data_frame.loc[index, 'response_e2_normalized'] = x_scaled[4][1]
+    ordered_data_frame.loc[index, 'response_e3_normalized'] = x_scaled[4][2]
+    ordered_data_frame.loc[index, 'response_e4_normalized'] = x_scaled[4][3]
+    ordered_data_frame.loc[index, 'response_f1_normalized'] = x_scaled[5][0]
+    ordered_data_frame.loc[index, 'response_f2_normalized'] = x_scaled[5][1]
+    ordered_data_frame.loc[index, 'response_f3_normalized'] = x_scaled[5][2]
+    ordered_data_frame.loc[index, 'response_f4_normalized'] = x_scaled[5][3]
+    ordered_data_frame.loc[index, 'response_g1_normalized'] = x_scaled[6][0]
+    ordered_data_frame.loc[index, 'response_g2_normalized'] = x_scaled[6][1]
+    ordered_data_frame.loc[index, 'response_g3_normalized'] = x_scaled[6][2]
+    ordered_data_frame.loc[index, 'response_g4_normalized'] = x_scaled[6][3]
+    ordered_data_frame.loc[index, 'response_h1_normalized'] = x_scaled[7][0]
+    ordered_data_frame.loc[index, 'response_h2_normalized'] = x_scaled[7][1]
+    ordered_data_frame.loc[index, 'response_h3_normalized'] = x_scaled[7][2]
+    ordered_data_frame.loc[index, 'response_h4_normalized'] = x_scaled[7][3]
+
+ordered_data_frame['avg_a_normalized'] = ordered_data_frame[['response_a1_normalized', 'response_a2_normalized', 'response_a3_normalized', 'response_a4_normalized']].mean(axis=1)
+ordered_data_frame['avg_b_normalized'] = ordered_data_frame[['response_b1_normalized', 'response_b2_normalized', 'response_b3_normalized', 'response_b4_normalized']].mean(axis=1)
+ordered_data_frame['avg_c_normalized'] = ordered_data_frame[['response_c1_normalized', 'response_c2_normalized', 'response_c3_normalized', 'response_c4_normalized']].mean(axis=1)
+ordered_data_frame['avg_d_normalized'] = ordered_data_frame[['response_d1_normalized', 'response_d2_normalized', 'response_d3_normalized', 'response_d4_normalized']].mean(axis=1)
+ordered_data_frame['avg_e_normalized'] = ordered_data_frame[['response_e1_normalized', 'response_e2_normalized', 'response_e3_normalized', 'response_e4_normalized']].mean(axis=1)
+ordered_data_frame['avg_f_normalized'] = ordered_data_frame[['response_f1_normalized', 'response_f2_normalized', 'response_f3_normalized', 'response_f4_normalized']].mean(axis=1)
+ordered_data_frame['avg_g_normalized'] = ordered_data_frame[['response_g1_normalized', 'response_g2_normalized', 'response_g3_normalized', 'response_g4_normalized']].mean(axis=1)
+ordered_data_frame['avg_h_normalized'] = ordered_data_frame[['response_h1_normalized', 'response_h2_normalized', 'response_h3_normalized', 'response_h4_normalized']].mean(axis=1)
+
+print(ordered_data_frame)
+ordered_data_frame.to_csv('./results/full_data_english_native.csv')
+
+# Create chart
+data_frame_combined = {
+    'Native': [
+        ordered_data_frame["avg_a_normalized"].mean(),
+        ordered_data_frame["avg_b_normalized"].mean(),
+        ordered_data_frame["avg_c_normalized"].mean(),
+        ordered_data_frame["avg_d_normalized"].mean(),
+        ordered_data_frame["avg_e_normalized"].mean(),
+        ordered_data_frame["avg_f_normalized"].mean(),
+        ordered_data_frame["avg_g_normalized"].mean(),
+        ordered_data_frame["avg_h_normalized"].mean()
+    ]
+}
+
+labels = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+]
+
+chart_data_frame = pd.DataFrame(data_frame_combined, index=labels)
+ax = chart_data_frame.plot.bar(rot=0)
+ax.set_ylabel('Average Normalized Response Score per User')
+ax.set_xlabel('Condition')
+ax.set_title('Average Normalized Scores per Condition for English Speakers')
+plt.savefig('./results/english_normalized_by_competence_and_condition_combined.png')
 
 
 print("Done.")
