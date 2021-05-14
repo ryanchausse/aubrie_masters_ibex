@@ -1,6 +1,8 @@
 import pandas as pd, numpy as np, os, time, base64, pysftp, glob, datetime, pathlib
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
+from scipy.stats import f_oneway
+from scipy.stats import ttest_ind
 from scipy.stats import zscore
 from dateutil import tz
 from itertools import islice
@@ -129,7 +131,7 @@ ordered_data_frame = data_frame[[
     'response_h1', 'response_h2', 'response_h3', 'response_h4'
 ]]
 ordered_data_frame.to_csv('./results/full_data.csv')
-print(ordered_data_frame)
+# print(ordered_data_frame)
 
 # Italian group now
 
@@ -286,7 +288,7 @@ ordered_data_frame_italian = data_frame[[
     'response_h1', 'response_h2', 'response_h3', 'response_h4'
 ]]
 ordered_data_frame_italian.to_csv('./results/full_data_italian.csv')
-print(ordered_data_frame_italian)
+# print(ordered_data_frame_italian)
 
 # Now make a chart for each condition with three groups:
 # english native speakers
@@ -496,7 +498,7 @@ ordered_data_frame['avg_f_normalized'] = ordered_data_frame[['response_f1_normal
 ordered_data_frame['avg_g_normalized'] = ordered_data_frame[['response_g1_normalized', 'response_g2_normalized', 'response_g3_normalized', 'response_g4_normalized']].mean(axis=1)
 ordered_data_frame['avg_h_normalized'] = ordered_data_frame[['response_h1_normalized', 'response_h2_normalized', 'response_h3_normalized', 'response_h4_normalized']].mean(axis=1)
 
-print(ordered_data_frame)
+# print(ordered_data_frame)
 ordered_data_frame.to_csv('./results/full_data_english_native.csv')
 
 # Create chart
@@ -623,7 +625,7 @@ high_competence_italian['avg_f_normalized'] = high_competence_italian[['response
 high_competence_italian['avg_g_normalized'] = high_competence_italian[['response_g1_normalized', 'response_g2_normalized', 'response_g3_normalized', 'response_g4_normalized']].mean(axis=1)
 high_competence_italian['avg_h_normalized'] = high_competence_italian[['response_h1_normalized', 'response_h2_normalized', 'response_h3_normalized', 'response_h4_normalized']].mean(axis=1)
 
-print(high_competence_italian)
+# print(high_competence_italian)
 high_competence_italian.to_csv('./results/full_data_high_competence.csv')
 
 low_competence_italian['response_a1_normalized'] = ''
@@ -714,7 +716,7 @@ low_competence_italian['avg_f_normalized'] = low_competence_italian[['response_f
 low_competence_italian['avg_g_normalized'] = low_competence_italian[['response_g1_normalized', 'response_g2_normalized', 'response_g3_normalized', 'response_g4_normalized']].mean(axis=1)
 low_competence_italian['avg_h_normalized'] = low_competence_italian[['response_h1_normalized', 'response_h2_normalized', 'response_h3_normalized', 'response_h4_normalized']].mean(axis=1)
 
-print(low_competence_italian)
+# print(low_competence_italian)
 low_competence_italian.to_csv('./results/full_data_low_competence.csv')
 
 # Create chart
@@ -757,5 +759,167 @@ ax.set_ylabel('Average Group Score')
 ax.set_xlabel('Condition')
 ax.set_title('Average User-Normalized Scores per Condition')
 plt.savefig('./results/all_normalized_by_competence_and_condition_combined.png')
+
+# Do one-way ANOVA for each category
+print('One-way ANOVAs. Going to combine High and Low Competence Italians so we can get a P statistic for the '
+      'difference between native speakers and Italians. Our English control group has the least, '
+      'at 66, so we will subtract 6 Italians from the high-competence group (the bigger one) '
+      'to match the numbers between groups')
+
+# Condition A
+print('One-Way ANOVA for Condition A English/Italian speakers:')
+english_value_list = ordered_data_frame['avg_a_normalized'].tolist()
+high_italian_value_list = high_competence_italian['avg_a_normalized'].tolist()
+low_italian_value_list = low_competence_italian['avg_a_normalized'].tolist()
+
+print('Number of English native speakers: ' + str(len(english_value_list)))
+print('Number of High competence English speakers: ' + str(len(high_italian_value_list)))
+print('Number of Low competence English speakers: ' + str(len(low_italian_value_list)))
+
+combined_italian_value_list = low_italian_value_list[6:]
+combined_italian_value_list.extend(high_italian_value_list)
+
+one_way_anova = f_oneway(english_value_list, combined_italian_value_list)
+t_test_dataframe = pd.DataFrame({'English': english_value_list, 'Italian': combined_italian_value_list})
+t_test_result = ttest_ind(t_test_dataframe['English'], t_test_dataframe['Italian'])
+print('t-test results:')
+print('Statistic: ' + str(t_test_result.statistic) + ', P Value: ' + str(t_test_result.pvalue))
+print('ANOVA results:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
+
+# Condition B
+print('One-Way ANOVA for Condition B English/Italian speakers:')
+english_value_list = ordered_data_frame['avg_b_normalized'].tolist()
+high_italian_value_list = high_competence_italian['avg_b_normalized'].tolist()
+low_italian_value_list = low_competence_italian['avg_b_normalized'].tolist()
+
+combined_italian_value_list = low_italian_value_list[6:]
+combined_italian_value_list.extend(high_italian_value_list)
+
+one_way_anova = f_oneway(english_value_list, combined_italian_value_list)
+t_test_dataframe = pd.DataFrame({'English': english_value_list, 'Italian': combined_italian_value_list})
+t_test_result = ttest_ind(t_test_dataframe['English'], t_test_dataframe['Italian'])
+print('t-test results:')
+print('Statistic: ' + str(t_test_result.statistic) + ', P Value: ' + str(t_test_result.pvalue))
+print('ANOVA results:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
+
+# Condition C
+print('One-Way ANOVA for Condition C English/Italian speakers:')
+english_value_list = ordered_data_frame['avg_c_normalized'].tolist()
+high_italian_value_list = high_competence_italian['avg_c_normalized'].tolist()
+low_italian_value_list = low_competence_italian['avg_c_normalized'].tolist()
+
+combined_italian_value_list = low_italian_value_list[6:]
+combined_italian_value_list.extend(high_italian_value_list)
+
+one_way_anova = f_oneway(english_value_list, combined_italian_value_list)
+t_test_dataframe = pd.DataFrame({'English': english_value_list, 'Italian': combined_italian_value_list})
+t_test_result = ttest_ind(t_test_dataframe['English'], t_test_dataframe['Italian'])
+print('t-test results:')
+print('Statistic: ' + str(t_test_result.statistic) + ', P Value: ' + str(t_test_result.pvalue))
+print('ANOVA results:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
+
+# Condition D
+print('One-Way ANOVA for Condition D English/Italian speakers:')
+english_value_list = ordered_data_frame['avg_d_normalized'].tolist()
+high_italian_value_list = high_competence_italian['avg_d_normalized'].tolist()
+low_italian_value_list = low_competence_italian['avg_d_normalized'].tolist()
+
+combined_italian_value_list = low_italian_value_list[6:]
+combined_italian_value_list.extend(high_italian_value_list)
+
+one_way_anova = f_oneway(english_value_list, combined_italian_value_list)
+t_test_dataframe = pd.DataFrame({'English': english_value_list, 'Italian': combined_italian_value_list})
+t_test_result = ttest_ind(t_test_dataframe['English'], t_test_dataframe['Italian'])
+print('t-test results:')
+print('Statistic: ' + str(t_test_result.statistic) + ', P Value: ' + str(t_test_result.pvalue))
+print('ANOVA results:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
+
+# Condition E
+print('One-Way ANOVA for Condition E English/Italian speakers:')
+english_value_list = ordered_data_frame['avg_e_normalized'].tolist()
+high_italian_value_list = high_competence_italian['avg_e_normalized'].tolist()
+low_italian_value_list = low_competence_italian['avg_e_normalized'].tolist()
+
+combined_italian_value_list = low_italian_value_list[6:]
+combined_italian_value_list.extend(high_italian_value_list)
+
+one_way_anova = f_oneway(english_value_list, combined_italian_value_list)
+t_test_dataframe = pd.DataFrame({'English': english_value_list, 'Italian': combined_italian_value_list})
+t_test_result = ttest_ind(t_test_dataframe['English'], t_test_dataframe['Italian'])
+print('t-test results:')
+print('Statistic: ' + str(t_test_result.statistic) + ', P Value: ' + str(t_test_result.pvalue))
+print('ANOVA results:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
+
+# Condition F
+print('One-Way ANOVA for Condition F English/Italian speakers:')
+english_value_list = ordered_data_frame['avg_f_normalized'].tolist()
+high_italian_value_list = high_competence_italian['avg_f_normalized'].tolist()
+low_italian_value_list = low_competence_italian['avg_f_normalized'].tolist()
+
+combined_italian_value_list = low_italian_value_list[6:]
+combined_italian_value_list.extend(high_italian_value_list)
+
+one_way_anova = f_oneway(english_value_list, combined_italian_value_list)
+t_test_dataframe = pd.DataFrame({'English': english_value_list, 'Italian': combined_italian_value_list})
+t_test_result = ttest_ind(t_test_dataframe['English'], t_test_dataframe['Italian'])
+print('t-test results:')
+print('Statistic: ' + str(t_test_result.statistic) + ', P Value: ' + str(t_test_result.pvalue))
+print('ANOVA results:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
+
+# Condition G
+print('One-Way ANOVA for Condition G English/Italian speakers:')
+english_value_list = ordered_data_frame['avg_g_normalized'].tolist()
+high_italian_value_list = high_competence_italian['avg_g_normalized'].tolist()
+low_italian_value_list = low_competence_italian['avg_g_normalized'].tolist()
+
+combined_italian_value_list = low_italian_value_list[6:]
+combined_italian_value_list.extend(high_italian_value_list)
+
+one_way_anova = f_oneway(english_value_list, combined_italian_value_list)
+t_test_dataframe = pd.DataFrame({'English': english_value_list, 'Italian': combined_italian_value_list})
+t_test_result = ttest_ind(t_test_dataframe['English'], t_test_dataframe['Italian'])
+print('t-test results:')
+print('Statistic: ' + str(t_test_result.statistic) + ', P Value: ' + str(t_test_result.pvalue))
+print('ANOVA results:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
+
+# Condition H
+print('One-Way ANOVA for Condition H English/Italian speakers:')
+english_value_list = ordered_data_frame['avg_h_normalized'].tolist()
+high_italian_value_list = high_competence_italian['avg_h_normalized'].tolist()
+low_italian_value_list = low_competence_italian['avg_h_normalized'].tolist()
+
+combined_italian_value_list = low_italian_value_list[6:]
+combined_italian_value_list.extend(high_italian_value_list)
+
+one_way_anova = f_oneway(english_value_list, combined_italian_value_list)
+t_test_dataframe = pd.DataFrame({'English': english_value_list, 'Italian': combined_italian_value_list})
+t_test_result = ttest_ind(t_test_dataframe['English'], t_test_dataframe['Italian'])
+print('t-test results:')
+print('Statistic: ' + str(t_test_result.statistic) + ', P Value: ' + str(t_test_result.pvalue))
+print('ANOVA results:')
+print('F Statistic = ' + str(one_way_anova[0]))
+print('P Value = ' + str(one_way_anova[1]))
+print()
 
 print("Done.")
